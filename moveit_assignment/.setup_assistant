@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: erl2
+    relative_path: urdf/sherlock_robot.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/m2wr.srdf
+  CONFIG:
+    author_name: Alice Nardelli
+    author_email: alice.nardelli98@gmail.com
+    generated_timestamp: 1640166477
