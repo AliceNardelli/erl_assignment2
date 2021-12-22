@@ -16,7 +16,10 @@
     <rosparam command="load" file="$(find moveit_assignment)/config/joint_limits.yaml"/>
     <rosparam command="load" file="$(find moveit_assignment)/config/cartesian_limits.yaml"/>
   </group>
-
+  
+  
+  
+  
   <!-- Load default settings for kinematics; these settings are overridden by settings in a node's namespace -->
   <group ns="$(arg robot_description)_kinematics">
     <rosparam command="load" file="$(find moveit_assignment)/config/kinematics.yaml"/>
