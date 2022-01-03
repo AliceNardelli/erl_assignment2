@@ -1,0 +1,8 @@
+current_hypotesis: ['','','','']
+ontology: 'http://www.emarolab.it/cluedo-ontology'
+ontology_path: '/root/ros_ws/src/erl_assignment2/my_erl2/cluedo_ontology.owl'
+wp1: 0
+wp2: 0
+wp3: 0
+wp4: 0
+start: 1
