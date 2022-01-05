@@ -18,7 +18,7 @@ namespace KCL_rosplan {
 	{
 
 	private:
-                ros::ServiceClient client;
+                //ros::ServiceClient client;
              
 	public:
 

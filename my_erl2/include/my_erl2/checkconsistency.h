@@ -1,6 +1,6 @@
 #include <ros/ros.h>
 #include "rosplan_action_interface/RPActionInterface.h"
-
+#include <erl2/ArmorInterface.h>
 
 /**
  * This file defines the MoveActionInterface class.
@@ -8,22 +8,23 @@
  * 
  */
 
+#include <ros/ros.h>
+#include "rosplan_action_interface/RPActionInterface.h"
 
 
 namespace KCL_rosplan {
 
-	class PerceiveHintsActionInterface: public RPActionInterface
+	class CheckConsistencyActionInterface: public RPActionInterface
 	{
 
 	private:
-                ros::ServiceClient client;
+               //ros::ServiceClient client;
 	public:
 
 		/* constructor */
-		PerceiveHintsActionInterface(ros::NodeHandle &nh);
+		CheckConsistencyActionInterface(ros::NodeHandle &nh);
 
 		/* listen to and process action_dispatch topic */
 		bool concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg);
 	};
 }
-

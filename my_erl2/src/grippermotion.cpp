@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <ros/ros.h>
 #include <rosplan_action_interface/RPActionInterface.h>
-#include "erl2/grippermotion.h"
+#include "my_erl2/grippermotion.h"
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <motion_plan/PlanningAction.h>
@@ -11,7 +11,8 @@
 #include <moveit/robot_state/robot_state.h>
 #include "geometry_msgs/Pose.h"
 #include "rosplan_knowledge_msgs/GetAttributeService.h"
-
+#include <string>
+#include <iostream>
 namespace KCL_rosplan {
 GripperMotionActionInterface::GripperMotionActionInterface(ros::NodeHandle &nh) {
 // here the initialization
@@ -27,20 +28,18 @@ bool GripperMotionActionInterface::concreteCallback(const rosplan_dispatch_msgs:
 	 const std::vector<std::string>& joint_names = joint_model_group->getVariableNames();
 
          int down;
-         rosplan_knowledge_msgs::GetAttributeService srv_loc;
+         /*rosplan_knowledge_msgs::GetAttributeService srv_loc;
           srv_loc.request.predicate_name="'at'";
           std::cout<<"request"<<std::endl;
           std::cout<<srv_loc.request<<std::endl;
           client_location.call(srv_loc);
           std::cout<<"response"<<std::endl;
-          std::cout<<srv_loc.response<<std::endl;
-          ros::param::get("/wp1", down);
+          std::cout<<srv_loc.response<<std::endl;*/
+          std::string actual_location;
+          ros::param::get("/actual_location", actual_location);
+          ros::param::get(actual_location, down);
           
-          
-          
-          
-          
-	  geometry_msgs::Pose pose1;
+          geometry_msgs::Pose pose1;
 	  std::vector<double> joint_values;
 	  double timeout = 0.1;	
           bool found_ik;

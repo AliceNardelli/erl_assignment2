@@ -6,11 +6,29 @@
     hy - hypotesis
 )
 (:init
+    (not_visited wp3)
+
     (visited wp0)
+    (visited wp4)
     (visited wp1)
+    (visited wp2)
 
-    (at wp1 sherlock_robot)
+    (at wp2 sherlock_robot)
 
 
 
 
+
+    (not_gripper_positioned)
+
+    (not_initial_location wp1)
+    (not_initial_location wp2)
+    (not_initial_location wp3)
+    (not_initial_location wp4)
+
+
+)
+(:goal (and
+    (end_game)
+))
+)

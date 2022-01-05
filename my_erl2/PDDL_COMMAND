@@ -99,10 +99,11 @@ autopep8 --in-place --aggressive --aggressive <filename>
 what to launch:
 
 roslaunch moveit_assignment demo_gazebo.launch
-roslaunch erl2 pddl_launcher.launch
-rosrun erl2 ArmorInterface.py
+roslaunch my_erl2 pddl_launcher.launch
 rosrun armor execute it.emarolab.armor.ARMORMainService
-rosrun erl2 mv
+rosrun my_erl2 ArmorInterface.py
+
+rosrun my_erl2 mv
 rosrun erl2 Reasoning.py
 
 
@@ -146,5 +147,37 @@ attributes:
 
 
 problemi
-1- non riesco a ricevere la location at
-2- non riesco a chiamare il servizio armor interface da perceivehint
+1- controllare che un ip sia presa solo una volta
+2- finire annuncio al centro
+
+
+
+
+
+                
+                id_c=rospy.get_param('ID'+str(erloracle.ID))
+                print(id_c)
+                if erloracle.key == 'where':
+                     if id_c[0]==' ':
+                        id_c[0]='where'
+                        rospy.set_param('ID'+str(erloracle.ID),id_c)
+                     else:
+                        _res.success = False
+                        print("add hp 0")
+                        return _res
+                elif erloracle.key == 'what':
+                     if id_c[1]==' ':
+                        id_c[1]='what'
+                        rospy.set_param('ID'+str(erloracle.ID),id_c)
+                     else:
+                        _res.success = False
+                        print("add hp 1")
+                        return _res
+                else:
+                     if id_c[2]==' ':
+                        id_c[2]='who'
+                        rospy.set_param('ID'+str(erloracle.ID),id_c)
+                     else:
+                        _res.success = False
+                        print("add hp 2")
+                        return _res

@@ -1,9 +1,9 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
-#include <erl2/ArmorInterface.h>
-#include <erl2/CheckAction.h>
-#include "erl2/checkconsistency.h"
+#include <my_erl2/ArmorInterface.h>
+#include <my_erl2/CheckAction.h>
+#include "my_erl2/checkconsistency.h"
 #include <unistd.h>
 #include <cstdlib>
 #include <iostream>
@@ -11,17 +11,18 @@
 #include <rosplan_action_interface/RPActionInterface.h>
 #include <motion_plan/PlanningAction.h>
 
+ros::ServiceClient client;
 
 namespace KCL_rosplan {
 
 CheckConsistencyActionInterface::CheckConsistencyActionInterface(ros::NodeHandle &nh) {
 	// here the initialization
-	ros::ServiceClient client = nh.serviceClient<erl2::ArmorInterface>("armor_interface");
+	//ros::ServiceClient client = nh.serviceClient<my_erl2::ArmorInterface>("armor_interface");
 
 }
 bool CheckConsistencyActionInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
         // here the implementation of the action
-	erl2::ArmorInterface srv;
+	my_erl2::ArmorInterface srv;
 	srv.request.mode = 2;
 
 	if (client.call(srv))
@@ -52,7 +53,7 @@ ros::init(argc, argv, "check_concistency_action", ros::init_options::AnonymousNa
 
 ros::NodeHandle nh("~");
 
-
+client = nh.serviceClient<my_erl2::ArmorInterface>("/armor_interface");
 KCL_rosplan::CheckConsistencyActionInterface my_aci(nh);
 
 my_aci.runActionInterface();

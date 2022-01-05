@@ -1,4 +1,5 @@
 current_hypotesis: ['','','','']
+curr_ID: ' '
 ontology: 'http://www.emarolab.it/cluedo-ontology'
 ontology_path: '/root/ros_ws/src/erl_assignment2/my_erl2/cluedo_ontology.owl'
 wp1: 0
@@ -6,3 +7,12 @@ wp2: 0
 wp3: 0
 wp4: 0
 start: 1
+actual_location: 'wp0'
+ID0: [' ',' ',' ']
+ID1: [' ',' ',' ']
+ID2: [' ',' ',' ']
+ID3: [' ',' ',' ']
+ID4: [' ',' ',' ']
+ID5: [' ',' ',' ']
+ID6: [' ',' ',' ']
+ID7: [' ',' ',' ']

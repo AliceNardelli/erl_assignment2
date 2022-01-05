@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <ros/ros.h>
 #include <rosplan_action_interface/RPActionInterface.h>
-#include "erl2/grippermotion.h"
+#include "my_erl2/grippermotion.h"
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <motion_plan/PlanningAction.h>
@@ -11,9 +11,9 @@
 #include <moveit/robot_state/robot_state.h>
 #include "geometry_msgs/Pose.h"
 #include <motion_plan/PlanningAction.h>
-#include "erl2/ErlOracle.h"
+#include "my_erl2/ErlOracle.h"
 
-void Callback(const erl2::ErlOracle::ConstPtr& msg)
+void Callback(const my_erl2::ErlOracle::ConstPtr& msg)
 {
   std::cout<<"NEW"<<std::endl;
   std::cout<<msg->ID<<std::endl;

@@ -11,10 +11,10 @@ Service :
 import sys
 import rospy
 import actionlib
-import erl2.msg
+import my_erl2.msg
 import math
 import time
-from erl2.srv import ArmorInterface, ArmorInterfaceRequest
+from my_erl2.srv import ArmorInterface, ArmorInterfaceRequest
 from std_srvs.srv import Empty, Trigger, TriggerResponse
 from rosplan_dispatch_msgs.srv import DispatchService
 
@@ -23,8 +23,7 @@ def query_planner():
     global dsp
     
     if dsp==True:
-	    
-	    print("INIT END")
+	   
 	    resp_pb=client_pb()
 	    resp_plan=client_plan()
 	    resp_parse=client_parse()
@@ -34,7 +33,8 @@ def query_planner():
 	    if(resp_dsp.goal_achieved==False):
 	      dsp=True
 	    else:
-	      dsp=False                            
+	      dsp=False 
+	      print('GAME ENDED')                           
 
     
 def main():
@@ -57,7 +57,7 @@ def main():
     dsp=True
     resp=client_init()
     rate = rospy.Rate(10)
-    while not rospy.is_shutdown():
+    while dsp==True:
         s=rospy.get_param("/start")
         if(s==0):
            query_planner()

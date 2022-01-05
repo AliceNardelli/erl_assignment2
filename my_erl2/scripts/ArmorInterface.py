@@ -11,11 +11,11 @@ Service :
 import sys
 import rospy
 import actionlib
-import erl2.msg
-from erl2.msg import ErlOracle
+import my_erl2.msg
+from my_erl2.msg import ErlOracle
 import math
 import time
-from erl2.srv import Oracle, Announcement, ArmorInterface, ArmorInterfaceResponse, AnnouncementRequest
+from my_erl2.srv import Oracle, Announcement, ArmorInterface, ArmorInterfaceResponse, AnnouncementRequest
 from armor_msgs.srv import ArmorDirective
 # mode 0 initialization
 # mode 1 perception
@@ -49,9 +49,9 @@ def ontology_interaction(
     msg.primary_command_spec = primary_command_spec
     msg.secondary_command_spec = secondary_command_spec
     msg.args = arg
-    print('send req')
+    
     resp = client_armor(msg)
-    print('rec res')
+    
     return resp
 
 
@@ -108,6 +108,7 @@ def clbk(req):
     '''
     global client_oracle_solution, client_armor, client_announce
     global erloracle
+    global checked
     _res = ArmorInterfaceResponse()
 
     # initialisation of the ontology
@@ -122,6 +123,7 @@ def clbk(req):
         # get correct solution
         rospy.wait_for_service('oracle_solution')
         resp = client_oracle_solution()
+        rospy.loginfo('rec correct')
         _res.mode = 1
         # announce the hypotesis
         rospy.wait_for_service('announce_service')
@@ -130,21 +132,25 @@ def clbk(req):
         msg.who = current_hypotesis[1]
         msg.where = current_hypotesis[2]
         msg.what = current_hypotesis[3]
+        rospy.loginfo('before ann')
         a = client_announce(msg)
-        print(req.ID)
-        if resp.ID == req.ID:
+        check_id=rospy.get_param('/curr_ID')
+        print(check_id)
+        print(str(resp.ID) )
+        print(str(resp.ID) == check_id)
+        if str(resp.ID) == check_id:
             print('cooreect')
-            resp=ontology_interaction('SAVE','INFERENCE','',['/root/ros_ws/src/exprob_ass1/cluedo_ontology_inference.owl'])
+            resp=ontology_interaction('SAVE','INFERENCE','',['/root/ros_ws/src/erl_assignment2/my_erl2/cluedo_ontology_inference.owl'])
             _res.success = True
-            _res.ID = req.ID
+            _res.ID = int(check_id)
         else:
             print('not correct')
             _res.success = False
-            _res.ID = req.ID
-            r1 = ontology_interaction('REMOVE', 'IND', '', [str(req.ID)])
+            _res.ID = int(check_id)
+            r1 = ontology_interaction('REMOVE', 'IND', '', [check_id])
             r3 = ontology_interaction(
                 'ADD', 'IND', 'CLASS', [
-                    str(req.ID), 'INCORRECT'])
+                    check_id, 'INCORRECT'])
             r2 = ontology_interaction('REASON', '', '', [])
         return _res
     if req.mode == 2:
@@ -185,8 +191,8 @@ def clbk(req):
                         resp_i.armor_response.queried_objects[i])
                     complete.remove(st)
             # if needed here the code to add the consistent hypo on param
-            # server
-            _res.ID = complete[0]
+            # serverin
+            _res.ID = int(complete[0])
             consistent_who = ontology_interaction(
                 'QUERY', 'OBJECTPROP', 'IND', ['who', complete[0]])
 
@@ -202,16 +208,18 @@ def clbk(req):
                 consistent_what.armor_response.queried_objects[0])
 
             # store the consistent hypotesis in the parameter server
+            rospy.set_param('curr_ID',complete[0])
             rospy.set_param(
                 'current_hypotesis', [
                     complete[0], who, where, what])
+                
         return _res
     else:
         print("adding new obj")
         _res.mode = 3
         # read a message ErlOracle
         #erloracle = rospy.wait_for_message('/oracle_hint', ErlOracle)
-        if erloracle.key == '' or erloracle.value == '' or erloracle.ID == '':
+        if erloracle.key == '' or erloracle.value == '-1':
             rospy.loginfo('malformed hints hint perceived: lens is dirty!!')
             _res.success = False
 
@@ -234,7 +242,10 @@ def clbk(req):
 
             # otherwise it add the object to the ontology
             else:
-                print("add hp")
+                if checked==True:
+                   print('Gripper not correct positioned, I have perceived an hint already perceived!')
+                   _res.success=False
+                   return _res
                 
                 _res.success = True
                 r1 = ontology_interaction(
@@ -264,19 +275,22 @@ def clbk(req):
                 # reason about the class
                 r2 = ontology_interaction('REASON', '', '', [])
                 rospy.loginfo('PERCEIVED: ['+str(erloracle.ID) + ':' + erloracle.value + ',' + erloracle.key + ']')
+                checked=True
         return _res
         
 def callback(data):
+    global checked
     #print(data)
     global erloracle
     erloracle.value=data.value
     erloracle.key=data.key
     erloracle.ID=data.ID
-    
+    checked= False
 
 def main():
     global client_armor,client_oracle_solution,client_announce
     global erloracle
+    global checked
     # init node
     rospy.init_node('armor_interface_client')
     # init service
@@ -289,6 +303,7 @@ def main():
     erloracle.key=''
     erloracle.value=''
     erloracle.ID=''
+    checked=True
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():
 

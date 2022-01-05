@@ -1,8 +1,8 @@
 #include <ros/ros.h>
 #include <gazebo_msgs/LinkStates.h>
 #include <visualization_msgs/MarkerArray.h>
-#include <erl2/ErlOracle.h>
-#include <erl2/Oracle.h>
+#include <my_erl2/ErlOracle.h>
+#include <my_erl2/Oracle.h>
 
 #include <iostream>
 #include <stdlib.h>
@@ -26,7 +26,7 @@ const std::string place[9] = {"conservatory", "lounge", "kitchen", "library", "h
 int uIDs[3]={-1,-1,-1};
 int winID = -1;
  
-std::vector<erl2::ErlOracle> oracle_msgs;
+std::vector<my_erl2::ErlOracle> oracle_msgs;
 
 double distfromtarget (double x, double y, double z, double x1, double y1, double z1){
 	double dist = sqrt((x-x1)*(x-x1)+(y-y1)*(y-y1)+(z-z1)*(z-z1));
@@ -34,7 +34,7 @@ double distfromtarget (double x, double y, double z, double x1, double y1, doubl
 	
 }
 
-bool oracleService(erl2::Oracle::Request &req, erl2::Oracle::Response &res)
+bool oracleService(my_erl2::Oracle::Request &req, my_erl2::Oracle::Response &res)
 	{
 		res.ID = winID;
 		return true;
@@ -49,9 +49,9 @@ void oracleCallback(const gazebo_msgs::LinkStates::ConstPtr& msg)
 		   for(int j=0; j<4;j++){
 				if ((distfromtarget(msg->pose[i].position.x, msg->pose[i].position.y, msg->pose[i].position.z, markx[j],marky[j],markz[j])<0.25) && ((lastmarkx !=markx[j]) || (lastmarky != marky[j]))){
 				//std::cout<<"MSG"<<std::endl;
-				erl2::ErlOracle oracle_msg;
-				oracle_msg.ID = rand() % 6;
-				if(rand()%4==1){
+				my_erl2::ErlOracle oracle_msg;
+				oracle_msg.ID = rand() % 6; //6
+				if(rand()%10==1){ //4
 					int a = rand()%5;
 					if(a==0){
 						oracle_msg.key = "";
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 ros::init(argc, argv, "assignment2");
 ros::NodeHandle nh;
 ros::Publisher vis_pub = nh.advertise<visualization_msgs::MarkerArray>( "/visualization_marker", 0 );
-oracle_pub = nh.advertise<erl2::ErlOracle>( "/oracle_hint", 0 );
+oracle_pub = nh.advertise<my_erl2::ErlOracle>( "/oracle_hint", 0 );
 ros::ServiceServer service= nh.advertiseService("/oracle_solution", oracleService);
 ros::Subscriber sub = nh.subscribe("/gazebo/link_states", 10, oracleCallback);
 visualization_msgs::MarkerArray markers;
@@ -177,7 +177,7 @@ markers.markers.push_back(marker);
 int uid;
 for (int i = 0; i < 4; i++){	
 	do{
-		uid = rand()%6;
+		uid = rand()%6;//6
 		for( int i = 0; i < 3; i++ ){
 			if(uid == uIDs[i] ){
 					uid = -1;

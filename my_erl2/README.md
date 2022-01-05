@@ -1,3 +1,5 @@
-# Repository for the 2nd assignment of the Experimental Robotics Laboratory course
+# Experimental Robotics Laboratory - Assignment2
 
-You can start from this package for the implementation of the 2nd assignment of the course. You find here the simulation environment and the oracle node. Please refer to the class slides for more info!
+The assignment consists in developping a software architecture to simulate an autonomous Cluedo game. The robot should explore in an arena, looking for hints which are in established locations. Reason about the hints through an ontology and find the solution of the game. The best actions that robot must perform are selected through a pddl planning system.
+
+## Software 
