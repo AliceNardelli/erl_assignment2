@@ -153,8 +153,8 @@ include_directories(
  add_executable(rosplan_interface_checkcorrect src/checkcorrect.cpp)
  add_executable(rosplan_interface_checkconsistency src/checkconsistency.cpp)
  add_executable(rosplan_interface_perceivehints src/perceivehints.cpp)
- add_executable(mv src/moveittrial.cpp)
- add_executable(monitor src/save_erloracle.cpp)
+ add_executable(mv src/initial_phase.cpp)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -171,7 +171,7 @@ add_dependencies(rosplan_interface_checkcorrect ${${PROJECT_NAME}_EXPORTED_TARGE
 add_dependencies(rosplan_interface_checkconsistency ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(rosplan_interface_perceivehints ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(mv ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(monitor ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(simulation
@@ -195,9 +195,7 @@ add_dependencies(monitor ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_T
    target_link_libraries(mv
    ${catkin_LIBRARIES}
  )
-target_link_libraries(monitor
-   ${catkin_LIBRARIES}
- )
+
 
 #############
 ## Install ##

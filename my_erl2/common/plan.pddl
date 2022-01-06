@@ -8,8 +8,8 @@ b (6.000 | 5.000)b (5.000 | 5.000)b (3.000 | 10.001)b (2.000 | 15.002)b (1.000 |
 ; States evaluated: 8
 ; Cost: 25.004
 ; Time 0.01
-0.000: (move sherlock_robot wp2 wp3)  [5.000]
-5.001: (move_gripper sherlock_robot wp3 hy)  [5.000]
-10.002: (perceive_hint sherlock_robot wp3 hy)  [5.000]
+0.000: (move sherlock_robot wp2 wp4)  [5.000]
+5.001: (move_gripper sherlock_robot wp4 hy)  [5.000]
+10.002: (perceive_hint sherlock_robot wp4 hy)  [5.000]
 15.003: (check_consistency hy)  [5.000]
 20.004: (check_correct hy)  [5.000]

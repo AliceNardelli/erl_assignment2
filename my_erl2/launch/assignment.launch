@@ -48,10 +48,8 @@
   <group if="$(arg gui)">
     <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
   </group>
-  <!--<node name="mv" pkg ="my_erl2" type="mv" output="screen" />  -->
-
+ 
   <node name="simulation" pkg ="my_erl2" type="simulation" output="screen" /> 
-  <node pkg="my_erl2" type="AnnounceHypotesis.py" name="announcement" output="screen"/>
   <node pkg="motion_plan" type="go_to_point_action.py" name="move_action" output="screen"/>	
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find my_erl2)/config/sim.rviz" /> 
   <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->

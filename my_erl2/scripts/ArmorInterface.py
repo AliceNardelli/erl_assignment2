@@ -119,11 +119,12 @@ def clbk(req):
         _res.success = True
         return _res
     if req.mode == 1:
-        rospy.loginfo('Check correct')
+        check_id=rospy.get_param('/curr_ID')
+        rospy.loginfo('CHEC CORRECT ID: '+ check_id)
         # get correct solution
         rospy.wait_for_service('oracle_solution')
         resp = client_oracle_solution()
-        rospy.loginfo('rec correct')
+        
         _res.mode = 1
         # announce the hypotesis
         rospy.wait_for_service('announce_service')
@@ -132,19 +133,17 @@ def clbk(req):
         msg.who = current_hypotesis[1]
         msg.where = current_hypotesis[2]
         msg.what = current_hypotesis[3]
-        rospy.loginfo('before ann')
+        
         a = client_announce(msg)
-        check_id=rospy.get_param('/curr_ID')
-        print(check_id)
-        print(str(resp.ID) )
-        print(str(resp.ID) == check_id)
+        
+
         if str(resp.ID) == check_id:
-            print('cooreect')
+            rospy.loginfo('CORRECT')
             resp=ontology_interaction('SAVE','INFERENCE','',['/root/ros_ws/src/erl_assignment2/my_erl2/cluedo_ontology_inference.owl'])
             _res.success = True
             _res.ID = int(check_id)
         else:
-            print('not correct')
+            rospy.loginfo('NOT CORRECT')
             _res.success = False
             _res.ID = int(check_id)
             r1 = ontology_interaction('REMOVE', 'IND', '', [check_id])
@@ -154,6 +153,7 @@ def clbk(req):
             r2 = ontology_interaction('REASON', '', '', [])
         return _res
     if req.mode == 2:
+        rospy.loginfo('CHECK CONSISTENCY')
         resp2 = ontology_interaction('DISJOINT', 'IND', 'CLASS', ['PERSON'])
         resp2 = ontology_interaction('DISJOINT', 'IND', 'CLASS', ['PLACE'])
         resp2 = ontology_interaction('DISJOINT', 'IND', 'CLASS', ['WEAPON'])
@@ -177,7 +177,7 @@ def clbk(req):
             rospy.loginfo('no new consistent hypotesis')
         else:
             _res.success = True
-            rospy.loginfo('Check consistent')
+            
             complete = []
 
             for i in range(len(resp_c.armor_response.queried_objects)):
@@ -212,10 +212,10 @@ def clbk(req):
             rospy.set_param(
                 'current_hypotesis', [
                     complete[0], who, where, what])
-                
+            rospy.loginfo('New consistent Hypthesis with ID'+complete[0])    
         return _res
     else:
-        print("adding new obj")
+        rospy.loginfo('PERCEIVE HINT')
         _res.mode = 3
         # read a message ErlOracle
         #erloracle = rospy.wait_for_message('/oracle_hint', ErlOracle)
@@ -225,9 +225,9 @@ def clbk(req):
 
         else:
             # ask the incorrect hypotesis collected
-            print("query incorrect")
+            
             r = ontology_interaction('QUERY', 'IND', 'CLASS', ['INCORRECT'])
-            print("incorrect ended")
+            
             incorrect = []
             for i in range(len(r.armor_response.queried_objects)):
                 st = menage_response(r.armor_response.queried_objects[i])
@@ -243,7 +243,7 @@ def clbk(req):
             # otherwise it add the object to the ontology
             else:
                 if checked==True:
-                   print('Gripper not correct positioned, I have perceived an hint already perceived!')
+                   rospy.loginfo('Gripper not correct positioned, I have perceived an hint already perceived!')
                    _res.success=False
                    return _res
                 
@@ -251,7 +251,7 @@ def clbk(req):
                 r1 = ontology_interaction(
                     'ADD', 'OBJECTPROP', 'IND', [
                         erloracle.key, str(erloracle.ID), erloracle.value])
-                print("add obj")
+                
                 if erloracle.key == 'where':
                     resp = ontology_interaction(
                         'ADD', 'IND', 'CLASS', [
@@ -280,7 +280,7 @@ def clbk(req):
         
 def callback(data):
     global checked
-    #print(data)
+    
     global erloracle
     erloracle.value=data.value
     erloracle.key=data.key

@@ -113,8 +113,10 @@ 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
 wp1 (3,0) (2.65,0,0) (0.38,0
 
 
-
-
+roslaunch moveit_assignment demo_gazebo.launch
+rosrun armor execute it.emarolab.armor.ARMORMainService
+roslaunch my_erl2 pddl_launcher.launch
+roslaunch my_erl2 Cluedo_game.launch
 
 attributes: 
   - 
@@ -151,7 +153,8 @@ problemi
 2- finire annuncio al centro
 
 
-
+A3
+      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
 
 
                 

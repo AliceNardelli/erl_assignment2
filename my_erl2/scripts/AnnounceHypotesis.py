@@ -25,7 +25,7 @@ def announce_clbk(req):
     Returns:
       srv(Announcement):True
     '''
-    print('start going')
+    rospy.loginfo('moving at the centr of the arena')
     client = actionlib.SimpleActionClient('reaching_goal', PlanningAction)
     client.wait_for_server()
     goal = PlanningGoal()
@@ -50,7 +50,7 @@ def announce_clbk(req):
         goal.target_pose.pose.position.y = 0
     client.send_goal(goal)
     client.wait_for_result()
-    print('returned')
+    
 
     return True
 

@@ -6,10 +6,10 @@
     hy - hypotesis
 )
 (:init
-    (not_visited wp3)
+    (not_visited wp4)
 
     (visited wp0)
-    (visited wp4)
+    (visited wp3)
     (visited wp1)
     (visited wp2)
 

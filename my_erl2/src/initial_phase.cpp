@@ -24,10 +24,7 @@ int down[4]={0,0,0,0};
 bool activate=false;
 void Callback(const my_erl2::ErlOracle::ConstPtr& msg)
 {
-  std::cout<<"NEW"<<std::endl;
-  std::cout<<msg->ID<<std::endl;
-  std::cout<<msg->key<<std::endl;
-  std::cout<<msg->value<<std::endl;
+
   new_msg=true;
 }
 
@@ -45,7 +42,7 @@ void move(double x, double y,double t){
 
 	ac.sendGoal(goal);
 	ac.waitForResult();
-        ROS_INFO("MOVED");
+        ROS_INFO("LOCATION REACHED");
         moved=true;
 }
 	
@@ -58,9 +55,10 @@ void move_gripper(double x, double y,bool start){
 	 moveit::planning_interface::MoveGroupInterface group("arm");
 	 const std::vector<std::string>& joint_names = joint_model_group->getVariableNames();
 	 if (start==true){
+	  //Add this lines of code to make start robot in initial position
 	  //group.setNamedTarget("zero");
 	  //group.move(); 
-	  std::cout<<"searching"<<std::endl;
+	  
 	 }
 	 else{
          
@@ -69,6 +67,8 @@ void move_gripper(double x, double y,bool start){
 	  double timeout = 0.1;	
           bool found_ik;
           moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+          //For loop has been inserted to explore both the heights 0.75 and 1.25
+          //actually the robot look only for 0.75
           for(int i=0;i<1;i++){
           
 	  pose1.orientation.w = 0.70;
@@ -79,10 +79,8 @@ void move_gripper(double x, double y,bool start){
 	  pose1.position.y =  y;
 	  
 	  if(first_turn_ended==false)	pose1.position.z = 0.70;
-	  else{ 
-	  pose1.position.z =  0.75;
-	  std::cout<<"0.75"<<std::endl;
-	  }
+	  else pose1.position.z =  0.75;
+
 	  
 	  group.setStartStateToCurrentState();
 	  group.setApproximateJointValueTarget(pose1, "arm_link_04");
@@ -113,16 +111,13 @@ void move_gripper(double x, double y,bool start){
 	  
 	  group.plan(my_plan); 
 	  group.execute(my_plan);
-	  
-	  std::cout << "Position 1 -> IK + setJointValue" << std::endl;
-	  /*group.setNamedTarget("zero");
-	  group.move();  
-          std::cout << "Position 2 -> Zero" << std::endl;*/
+	  ROS_INFO("ARM MOVED");
+
           if(new_msg==true)
           {
-          std::cout << "Location found" << std::endl;
+          
           new_msg=false;
-          //std::cout<<i<<""<<state<<std::endl;
+         
           if(i==0){
              if (state==0){up[0]=1;ros::param::set("/wp1", 1);}
              else if (state==1) {up[1]=1;ros::param::set("/wp2", 1);}
@@ -130,12 +125,13 @@ void move_gripper(double x, double y,bool start){
              else {up[3]=1;ros::param::set("/wp4", 1);}
           }
           else{
-             if (state==0) down[0]=1;
-             else if (state==1) down[1]=1;
-             else if (state==2) down[2]=1;
-             else down[3]=1;
+             if (state==0) down[0]=0;
+             else if (state==1) down[1]=0;
+             else if (state==2) down[2]=0;
+             else down[3]=0;
           }
           }
+          //disargument these lines if you want to perform both the heigths
           /*if(i==0) first_turn_ended=true;
           else first_turn_ended=false;*/
           }
@@ -147,8 +143,7 @@ void move_gripper(double x, double y,bool start){
            activate=false;
            finished=true;
            ros::param::set("/start", 0);
-           std::cout<<up[0]<<up[1]<<up[2]<<up[3]<<std::endl;
-           std::cout<<down[0]<<down[1]<<down[2]<<down[3]<<std::endl;
+           ROS_INFO("EXPLORATION PHASE CONCLUDED");
 	  }}
 
 }
@@ -161,7 +156,7 @@ void fsm(){
 	}
 	else{
 	if(gripper==false){
-	std::cout<<"ONCE"<<std::endl;
+	
         move_gripper(0.5,0,false);
         gripper=true;}
 	}
@@ -172,7 +167,7 @@ void fsm(){
 	gripper=false;}
 	else{
 	if(gripper==false){
-	std::cout<<"ONCE"<<std::endl;	
+	
 	move_gripper(0.5,0,false);
 	gripper=true;}
 	}
@@ -183,7 +178,7 @@ void fsm(){
 	gripper=false;}
 	else{	
 	if(gripper==false){
-	std::cout<<"ONCE"<<std::endl;
+	
 	move_gripper(0.5,0,false);
 	gripper=true;}
         }
@@ -194,7 +189,7 @@ void fsm(){
 	gripper=false;}
 	else{
 	if(gripper==false){
-	std::cout<<"ONCE"<<std::endl;		
+		
 	move_gripper(0.5,0,false);
 	gripper=true;}}
 	}
@@ -204,7 +199,7 @@ bool srv_clbk(std_srvs::Trigger::Request  &req,
          std_srvs::Trigger::Response &res)
 {
    activate=true;
-   //while(activate==true) fsm();
+   ROS_INFO("START INITIAL BEHAVIOR");
    return true;
 }
 int main(int argc, char **argv) {
