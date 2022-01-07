@@ -3,8 +3,8 @@
 
 
 /**
- * This file defines the MoveActionInterface class.
- * MoveActionInterface is used to simulate synthetic actions (non physics based simulator)
+ * This file defines the PerceiveHintsActionInterface class.
+ *PerceiveHintsActionInterface is used to perceive a new hint
  * 
  */
 

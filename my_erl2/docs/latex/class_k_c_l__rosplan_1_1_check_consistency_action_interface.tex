@@ -1,0 +1,86 @@
+\hypertarget{class_k_c_l__rosplan_1_1_check_consistency_action_interface}{}\doxysection{K\+C\+L\+\_\+rosplan\+::Check\+Consistency\+Action\+Interface Class Reference}
+\label{class_k_c_l__rosplan_1_1_check_consistency_action_interface}\index{KCL\_rosplan::CheckConsistencyActionInterface@{KCL\_rosplan::CheckConsistencyActionInterface}}
+
+
+{\ttfamily \#include $<$checkconsistency.\+h$>$}
+
+
+
+Inheritance diagram for K\+C\+L\+\_\+rosplan\+::Check\+Consistency\+Action\+Interface\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{class_k_c_l__rosplan_1_1_check_consistency_action_interface__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for K\+C\+L\+\_\+rosplan\+::Check\+Consistency\+Action\+Interface\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{class_k_c_l__rosplan_1_1_check_consistency_action_interface__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_k_c_l__rosplan_1_1_check_consistency_action_interface_a50afb27c7e91576a88c8c6cfb70364e6}{Check\+Consistency\+Action\+Interface}} (ros\+::\+Node\+Handle \&nh)
+\item 
+bool \mbox{\hyperlink{class_k_c_l__rosplan_1_1_check_consistency_action_interface_afdc9e335a5c88e4efd7bf3214584b3ed}{concrete\+Callback}} (const rosplan\+\_\+dispatch\+\_\+msgs\+::\+Action\+Dispatch\+::\+Const\+Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em This function is the callback function of the service for server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 17 of file checkconsistency.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_k_c_l__rosplan_1_1_check_consistency_action_interface_a50afb27c7e91576a88c8c6cfb70364e6}\label{class_k_c_l__rosplan_1_1_check_consistency_action_interface_a50afb27c7e91576a88c8c6cfb70364e6}} 
+\index{KCL\_rosplan::CheckConsistencyActionInterface@{KCL\_rosplan::CheckConsistencyActionInterface}!CheckConsistencyActionInterface@{CheckConsistencyActionInterface}}
+\index{CheckConsistencyActionInterface@{CheckConsistencyActionInterface}!KCL\_rosplan::CheckConsistencyActionInterface@{KCL\_rosplan::CheckConsistencyActionInterface}}
+\doxysubsubsection{\texorpdfstring{CheckConsistencyActionInterface()}{CheckConsistencyActionInterface()}}
+{\footnotesize\ttfamily K\+C\+L\+\_\+rosplan\+::\+Check\+Consistency\+Action\+Interface\+::\+Check\+Consistency\+Action\+Interface (\begin{DoxyParamCaption}\item[{ros\+::\+Node\+Handle \&}]{nh }\end{DoxyParamCaption})}
+
+
+
+Definition at line 49 of file checkconsistency.\+cpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_k_c_l__rosplan_1_1_check_consistency_action_interface_afdc9e335a5c88e4efd7bf3214584b3ed}\label{class_k_c_l__rosplan_1_1_check_consistency_action_interface_afdc9e335a5c88e4efd7bf3214584b3ed}} 
+\index{KCL\_rosplan::CheckConsistencyActionInterface@{KCL\_rosplan::CheckConsistencyActionInterface}!concreteCallback@{concreteCallback}}
+\index{concreteCallback@{concreteCallback}!KCL\_rosplan::CheckConsistencyActionInterface@{KCL\_rosplan::CheckConsistencyActionInterface}}
+\doxysubsubsection{\texorpdfstring{concreteCallback()}{concreteCallback()}}
+{\footnotesize\ttfamily bool K\+C\+L\+\_\+rosplan\+::\+Check\+Consistency\+Action\+Interface\+::concrete\+Callback (\begin{DoxyParamCaption}\item[{const rosplan\+\_\+dispatch\+\_\+msgs\+::\+Action\+Dispatch\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+This function is the callback function of the service for server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & the request received from the dispatcher\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & boolean value\\
+\hline
+\end{DoxyRetVals}
+In this function is directly called the /armor\+\_\+interface service to check if there is a new consistent hypothesis. Return value is True if there is. 
+
+Definition at line 65 of file checkconsistency.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/root/ros\+\_\+ws/src/erl\+\_\+assignment2/my\+\_\+erl2/include/my\+\_\+erl2/\mbox{\hyperlink{checkconsistency_8h}{checkconsistency.\+h}}\item 
+/root/ros\+\_\+ws/src/erl\+\_\+assignment2/my\+\_\+erl2/src/\mbox{\hyperlink{checkconsistency_8cpp}{checkconsistency.\+cpp}}\end{DoxyCompactItemize}

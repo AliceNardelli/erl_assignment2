@@ -1,13 +1,21 @@
 #! /usr/bin/env python
 """
 Module:
-	AnnounceHypotesis
+	ArmorInterface
 Author:
 	Alice Nardelli alice.nardelli98@gmail.com
-ROS nodes used for simulating the robot announcement. Given an hypotesis it announces it simply printing on terminal.
+ROS nodes used for menaging with aRMOR. 
 Service :
-	/announce_service to get the hypotesis to announce
+       /armor_interface server called to menage with aRMOR according to the needs of the client node
+Sevice Client:
+       /oracle_solution sevice called to get the id of the correct hypothesis
+       /armor_interface_srv service called to load messages and interface with armor
+       /announce_service called to start the announce hypothesis behavior
+Subscribers:
+       /oracle_hint to get the hints
+       
 """
+
 import sys
 import rospy
 import actionlib
@@ -72,6 +80,15 @@ def menage_response(st):
 
 
 def load_initialize_ontology():
+    '''
+             Description of the load_initialize_ontology function:
+             This function is used to load the ontology and initialize the classes
+             Args:
+               None
+             Returns:
+               None
+
+    '''
     # load ontology
     ontology = rospy.get_param('ontology')
     ontology_path = rospy.get_param('ontology_path')
@@ -95,15 +112,17 @@ def load_initialize_ontology():
 
 def clbk(req):
     '''
-    Description of the callback:
-    This function retrieves the goal of the custom MoveAction. Inside the goal are specified the actual and the goal position of the robot and the name of the destination room.
-    Movement is simulate as a wait procedure. The wait is proportionale to the length of the path. The path is a straigth line between the two points.
-    The action continously provides as feedbact actual (x,y,yaw) of the robot.
+    Description of the calbk:
+    The node can interface in four different way with armor defendig on the mode fiel of the request.
+    If mode is 0 the ontology is loaded and initialized. 
+    If mode is 1 the current hypothesis'id is compared to the correct one. In case they are equal the game ends.
+    Mode 2 involves to check if there are new consistent hypothesis.
+    Finally mode 3 means that robot try to perceive a new hint. If perceived the hint will be loaded on the ontology.
     Args:
-       msg(MoveGoal): goal retrieved by */move_action_server/goal* topic
+       msg(ArmorInterfaceRequest): retrieved by */armor_interface* sevice
     Returns:
-       msg(MoveFeedback): actual (x,y,yaw) of the robot published on */move_action_server/feedback* topic
-       msg(MoveResult): true
+       msg(ArmorInterfaceResponse): published by */armor_interface* sevice
+       
 
     '''
     global client_oracle_solution, client_armor, client_announce
@@ -118,9 +137,11 @@ def clbk(req):
         _res.mode = 0
         _res.success = True
         return _res
+    #check if the current hypo is correct
     if req.mode == 1:
+        #get the current consistent hypothesis to check
         check_id=rospy.get_param('/curr_ID')
-        rospy.loginfo('CHEC CORRECT ID: '+ check_id)
+        rospy.loginfo('CHECK CORRECT ID: '+ check_id)
         # get correct solution
         rospy.wait_for_service('oracle_solution')
         resp = client_oracle_solution()
@@ -136,12 +157,14 @@ def clbk(req):
         
         a = client_announce(msg)
         
-
+        #if the currecnt hypothesis is correct save the current inferenced ontology and state that the game ended
         if str(resp.ID) == check_id:
             rospy.loginfo('CORRECT')
+            
             resp=ontology_interaction('SAVE','INFERENCE','',['/root/ros_ws/src/erl_assignment2/my_erl2/cluedo_ontology_inference.owl'])
             _res.success = True
             _res.ID = int(check_id)
+        #if it is not correct add the incorrect hypothesis to the incorrect class 
         else:
             rospy.loginfo('NOT CORRECT')
             _res.success = False
@@ -152,6 +175,7 @@ def clbk(req):
                     check_id, 'INCORRECT'])
             r2 = ontology_interaction('REASON', '', '', [])
         return _res
+    #check if there is a new consistent hypothesis
     if req.mode == 2:
         rospy.loginfo('CHECK CONSISTENCY')
         resp2 = ontology_interaction('DISJOINT', 'IND', 'CLASS', ['PERSON'])
@@ -176,6 +200,7 @@ def clbk(req):
 
             rospy.loginfo('no new consistent hypotesis')
         else:
+           #there is a new consistent hypothesis
             _res.success = True
             
             complete = []
@@ -190,8 +215,8 @@ def clbk(req):
                     st = menage_response(
                         resp_i.armor_response.queried_objects[i])
                     complete.remove(st)
-            # if needed here the code to add the consistent hypo on param
-            # serverin
+            # query the consistent hypothesis
+            
             _res.ID = int(complete[0])
             consistent_who = ontology_interaction(
                 'QUERY', 'OBJECTPROP', 'IND', ['who', complete[0]])
@@ -215,10 +240,10 @@ def clbk(req):
             rospy.loginfo('New consistent Hypthesis with ID'+complete[0])    
         return _res
     else:
+        #perceive hint mode
         rospy.loginfo('PERCEIVE HINT')
         _res.mode = 3
-        # read a message ErlOracle
-        #erloracle = rospy.wait_for_message('/oracle_hint', ErlOracle)
+        #if a field is empty or -1 the perceived hint is malformed
         if erloracle.key == '' or erloracle.value == '-1':
             rospy.loginfo('malformed hints hint perceived: lens is dirty!!')
             _res.success = False
@@ -242,11 +267,12 @@ def clbk(req):
 
             # otherwise it add the object to the ontology
             else:
+                #if the hint has been already perceived that means that arm not correctly moved the code returns false
                 if checked==True:
                    rospy.loginfo('Gripper not correct positioned, I have perceived an hint already perceived!')
                    _res.success=False
                    return _res
-                
+                #otherwise I add the hint to the ontology
                 _res.success = True
                 r1 = ontology_interaction(
                     'ADD', 'OBJECTPROP', 'IND', [
@@ -279,12 +305,23 @@ def clbk(req):
         return _res
         
 def callback(data):
-    global checked
+    '''
+    Description of the callback:
+    When an hint is perceived it is published as an ErlOracle message on the /oracle_hint topic.
+    Once subscribed the message is saved on the global variable erloracle.
     
+    Args:
+       msg(ErlOracle): retrieved by */oracle_hint* topic
+  
+       
+
+    '''
+    global checked
     global erloracle
     erloracle.value=data.value
     erloracle.key=data.key
     erloracle.ID=data.ID
+    #checked var is used in order to read an hint only once
     checked= False
 
 def main():
@@ -299,10 +336,12 @@ def main():
     client_armor = rospy.ServiceProxy('armor_interface_srv', ArmorDirective)
     client_announce = rospy.ServiceProxy('announce_service', Announcement)
     rospy.Subscriber("/oracle_hint", ErlOracle, callback)
+    #init erloracle msg to store hint 
     erloracle=ErlOracle()
     erloracle.key=''
     erloracle.value=''
     erloracle.ID=''
+    #checked value initialisation
     checked=True
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():

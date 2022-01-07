@@ -3,8 +3,8 @@
 #include <erl2/ArmorInterface.h>
 
 /**
- * This file defines the MoveActionInterface class.
- * MoveActionInterface is used to simulate synthetic actions (non physics based simulator)
+ * This file defines the CheckConsistencyActionInterface class.
+ * CheckConsistencyActionInterface is used to check if there is a new consistent hypotesis
  * 
  */
 

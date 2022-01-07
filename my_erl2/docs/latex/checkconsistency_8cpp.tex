@@ -1,0 +1,99 @@
+\hypertarget{checkconsistency_8cpp}{}\doxysection{/root/ros\+\_\+ws/src/erl\+\_\+assignment2/my\+\_\+erl2/src/checkconsistency.cpp File Reference}
+\label{checkconsistency_8cpp}\index{/root/ros\_ws/src/erl\_assignment2/my\_erl2/src/checkconsistency.cpp@{/root/ros\_ws/src/erl\_assignment2/my\_erl2/src/checkconsistency.cpp}}
+
+
+Node to implement the check consistency action.  
+
+
+{\ttfamily \#include $<$ros/ros.\+h$>$}\newline
+{\ttfamily \#include $<$actionlib/client/simple\+\_\+action\+\_\+client.\+h$>$}\newline
+{\ttfamily \#include $<$actionlib/client/terminal\+\_\+state.\+h$>$}\newline
+{\ttfamily \#include $<$my\+\_\+erl2/\+Armor\+Interface.\+h$>$}\newline
+{\ttfamily \#include $<$my\+\_\+erl2/\+Check\+Action.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}my\+\_\+erl2/checkconsistency.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$rosplan\+\_\+action\+\_\+interface/\+R\+P\+Action\+Interface.\+h$>$}\newline
+{\ttfamily \#include $<$motion\+\_\+plan/\+Planning\+Action.\+h$>$}\newline
+Include dependency graph for checkconsistency.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{checkconsistency_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemy__erl2}{my\+\_\+erl2}}
+\item 
+ \mbox{\hyperlink{namespace_k_c_l__rosplan}{K\+C\+L\+\_\+rosplan}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{checkconsistency_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+ros\+::\+Service\+Client \mbox{\hyperlink{checkconsistency_8cpp_a17bcd065930a8a7f9f194078d9977268}{client}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Node to implement the check consistency action. 
+
+\begin{DoxyAuthor}{Author}
+Alice Nardelli 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+07/01/2022
+\end{DoxyDate}
+Subscribes to\+: ~\newline
+ None
+
+Publishes to\+: ~\newline
+ None
+
+Client\+: ~\newline
+ /armor\+\_\+interface
+
+Services\+: ~\newline
+ /rosplan\+\_\+interface\+\_\+checkconsistency
+
+Description\+: ~\newline
+
+
+This is a service server node that if called directly ask to /armor\+\_\+interface service if there is a new consistent hypothesis to check. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{checkconsistency_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{checkconsistency_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{checkconsistency.cpp@{checkconsistency.cpp}!main@{main}}
+\index{main@{main}!checkconsistency.cpp@{checkconsistency.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line 92 of file checkconsistency.\+cpp.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{checkconsistency_8cpp_a17bcd065930a8a7f9f194078d9977268}\label{checkconsistency_8cpp_a17bcd065930a8a7f9f194078d9977268}} 
+\index{checkconsistency.cpp@{checkconsistency.cpp}!client@{client}}
+\index{client@{client}!checkconsistency.cpp@{checkconsistency.cpp}}
+\doxysubsubsection{\texorpdfstring{client}{client}}
+{\footnotesize\ttfamily ros\+::\+Service\+Client client}
+
+
+
+Definition at line 45 of file checkconsistency.\+cpp.
+

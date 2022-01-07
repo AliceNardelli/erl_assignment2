@@ -1,3 +1,33 @@
+/** @package my_erl2
+* 
+* @file grippermotion.cpp
+* @brief Node to implement the check correct action 
+* @author Alice Nardelli
+* @version 0.1
+* @date 07/01/2022
+*
+*
+*
+* @details 
+*
+* Subscribes to: <BR>
+*    None
+* 
+* Publishes to: <BR>
+*    None
+* 
+* Client: <BR>
+*   /moveit_interface
+* 	
+* Services: <BR>
+*  /rosplan_interface_grippermotion
+*
+* Description: <BR>
+*
+*This is a service node used to control the robot in order to reach a specific location in the environment
+*
+*/
+
 #include <unistd.h>
 #include <ros/ros.h>
 #include <rosplan_action_interface/RPActionInterface.h>
@@ -16,9 +46,19 @@
 namespace KCL_rosplan {
 GripperMotionActionInterface::GripperMotionActionInterface(ros::NodeHandle &nh) {
 // here the initialization
-ros::ServiceClient client_location = nh.serviceClient<rosplan_knowledge_msgs::GetAttributeService>("/rosplan_knowledge_base/state/propositions");
+
 }
+/**
+ *@brief This function is the callback function of the service for server.
+ *@param msg  the request received from the dispatcher
+ * 
+ *@retval A boolean value
+ * 
+ *In this function The moveit ad-hoc generated package is used in order to reach a certain point in the environment.
+ *Return value is True if the point is reached.
+ */
 bool GripperMotionActionInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
+         //moveit initialization
 	 robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
 	 const moveit::core::RobotModelPtr& kinematic_model = robot_model_loader.getModel();
 	 moveit::core::RobotStatePtr kinematic_state(new moveit::core::RobotState(kinematic_model));
@@ -28,15 +68,10 @@ bool GripperMotionActionInterface::concreteCallback(const rosplan_dispatch_msgs:
 	 const std::vector<std::string>& joint_names = joint_model_group->getVariableNames();
 
          int down;
-         /*rosplan_knowledge_msgs::GetAttributeService srv_loc;
-          srv_loc.request.predicate_name="'at'";
-          std::cout<<"request"<<std::endl;
-          std::cout<<srv_loc.request<<std::endl;
-          client_location.call(srv_loc);
-          std::cout<<"response"<<std::endl;
-          std::cout<<srv_loc.response<<std::endl;*/
+          //get the actual_location of the robot
           std::string actual_location;
           ros::param::get("/actual_location", actual_location);
+          //understand if in that location the position to reach is 0.75 or 1.25
           ros::param::get(actual_location, down);
           
           geometry_msgs::Pose pose1;
@@ -44,7 +79,7 @@ bool GripperMotionActionInterface::concreteCallback(const rosplan_dispatch_msgs:
 	  double timeout = 0.1;	
           bool found_ik;
           moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-
+          //set the goal pose
 	  pose1.orientation.w = 0.70;
 	  pose1.orientation.x = -0.00;
 	  pose1.orientation.y = 0.00;
@@ -54,9 +89,10 @@ bool GripperMotionActionInterface::concreteCallback(const rosplan_dispatch_msgs:
 	  //query about location
 	  if(down==1)	pose1.position.z =  0.75;
 	  else pose1.position.z =  1.25;
+	  //set the current state as the start state
 	  group.setStartStateToCurrentState();
 	  group.setApproximateJointValueTarget(pose1, "arm_link_04");
-
+          //found the inverse kinematic in order to reach the goal
 	  found_ik = kinematic_state->setFromIK(joint_model_group, pose1, timeout);
 
 	  // Now, we can print out the IK solution (if found):
@@ -85,9 +121,7 @@ bool GripperMotionActionInterface::concreteCallback(const rosplan_dispatch_msgs:
 	  group.execute(my_plan);
 	  
 	  std::cout << "Position 1 -> IK + setJointValue" << std::endl;
-	  /*group.setNamedTarget("zero");
-	  group.move();  
-          std::cout << "Position 2 -> Zero" << std::endl;*/
+
           
 	ROS_INFO("Action (%s) performed: completed!", msg->name.c_str());
 	return true;

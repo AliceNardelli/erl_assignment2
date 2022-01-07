@@ -1,7 +1,7 @@
 
 /**
- * This file defines the MoveActionInterface class.
- * MoveActionInterface is used to simulate synthetic actions (non physics based simulator)
+ * This file defines the GripperMotionActionInterface class.
+ * GripperMotionActionInterface is used to simulate control the robotic arm
  * 
  */
 
@@ -15,7 +15,7 @@ namespace KCL_rosplan {
 	{
 
 	private:
-	        ros::ServiceClient client_location;
+	       
 
 	public:
 

@@ -1,0 +1,84 @@
+\hypertarget{grippermotion_8cpp}{}\doxysection{/root/ros\+\_\+ws/src/erl\+\_\+assignment2/my\+\_\+erl2/src/grippermotion.cpp File Reference}
+\label{grippermotion_8cpp}\index{/root/ros\_ws/src/erl\_assignment2/my\_erl2/src/grippermotion.cpp@{/root/ros\_ws/src/erl\_assignment2/my\_erl2/src/grippermotion.cpp}}
+
+
+Node to implement the check correct action.  
+
+
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$ros/ros.\+h$>$}\newline
+{\ttfamily \#include $<$rosplan\+\_\+action\+\_\+interface/\+R\+P\+Action\+Interface.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}my\+\_\+erl2/grippermotion.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$actionlib/client/simple\+\_\+action\+\_\+client.\+h$>$}\newline
+{\ttfamily \#include $<$actionlib/client/terminal\+\_\+state.\+h$>$}\newline
+{\ttfamily \#include $<$motion\+\_\+plan/\+Planning\+Action.\+h$>$}\newline
+{\ttfamily \#include $<$moveit/move\+\_\+group\+\_\+interface/move\+\_\+group\+\_\+interface.\+h$>$}\newline
+{\ttfamily \#include $<$moveit/robot\+\_\+model\+\_\+loader/robot\+\_\+model\+\_\+loader.\+h$>$}\newline
+{\ttfamily \#include $<$moveit/robot\+\_\+model/robot\+\_\+model.\+h$>$}\newline
+{\ttfamily \#include $<$moveit/robot\+\_\+state/robot\+\_\+state.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Pose.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rosplan\+\_\+knowledge\+\_\+msgs/\+Get\+Attribute\+Service.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+Include dependency graph for grippermotion.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{grippermotion_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemy__erl2}{my\+\_\+erl2}}
+\item 
+ \mbox{\hyperlink{namespace_k_c_l__rosplan}{K\+C\+L\+\_\+rosplan}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{grippermotion_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Node to implement the check correct action. 
+
+\begin{DoxyAuthor}{Author}
+Alice Nardelli 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+07/01/2022
+\end{DoxyDate}
+Subscribes to\+: ~\newline
+ None
+
+Publishes to\+: ~\newline
+ None
+
+Client\+: ~\newline
+ /moveit\+\_\+interface
+
+Services\+: ~\newline
+ /rosplan\+\_\+interface\+\_\+grippermotion
+
+Description\+: ~\newline
+
+
+This is a service node used to control the robot in order to reach a specific location in the environment 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{grippermotion_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{grippermotion_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{grippermotion.cpp@{grippermotion.cpp}!main@{main}}
+\index{main@{main}!grippermotion.cpp@{grippermotion.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line 130 of file grippermotion.\+cpp.
+

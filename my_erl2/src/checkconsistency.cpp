@@ -1,3 +1,34 @@
+/** @package my_erl2
+* 
+* @file checkconsistency.cpp
+* @brief Node to implement the check consistency action 
+* @author Alice Nardelli
+* @version 0.1
+* @date 07/01/2022
+*
+*
+*
+* @details 
+*
+* Subscribes to: <BR>
+*    None
+* 
+* Publishes to: <BR>
+*    None
+* 
+* Client: <BR>
+*   /armor_interface
+* 	
+* Services: <BR>
+*  /rosplan_interface_checkconsistency
+*
+* Description: <BR>
+*
+*This is a service server node that if called directly ask to /armor_interface
+*service if there is a new consistent hypothesis to check.
+*
+*/
+
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
@@ -17,9 +48,20 @@ namespace KCL_rosplan {
 
 CheckConsistencyActionInterface::CheckConsistencyActionInterface(ros::NodeHandle &nh) {
 	// here the initialization
-	//ros::ServiceClient client = nh.serviceClient<my_erl2::ArmorInterface>("armor_interface");
+	
 
 }
+
+/**
+ *@brief This function is the callback function of the service for server.
+ *@param msg  the request received from the dispatcher
+ * 
+ *@retval A boolean value
+ * 
+ *In this function is directly called the /armor_interface service to check if there is a new consistent hypothesis.
+ *Return value is True if there is.
+ */
+ 
 bool CheckConsistencyActionInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
         // here the implementation of the action
 	my_erl2::ArmorInterface srv;

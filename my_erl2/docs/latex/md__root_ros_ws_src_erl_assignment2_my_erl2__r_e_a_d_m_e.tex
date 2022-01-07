@@ -1,0 +1,93 @@
+The assignment consists in developping a software architecture to simulate an autonomous Cluedo game. The robot should explore in an arena, looking for hints which are in established locations. Reason about the hints through an ontology and find the solution of the game. The best actions that robot must perform are selected through a pddl planning system.\hypertarget{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Software Architecture}\label{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md1}
+\hypertarget{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md2}{}\doxysubsection{Robot Model}\label{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md2}
+I\+M\+A\+GE
+
+The robot model is visible in the image above. It has been developped developped in the {\bfseries{sherlock\+\_\+robot.\+gazebo}} and {\bfseries{sherlock\+\_\+robot.\+xacro}} files in the urdf folder. The only constraint is reaching the height of 0.\+75 and 1.\+25 which is the height where hint are located. In order to control the arm and reach the hints the are is controlled through an ad-\/oc generated moveit package {\bfseries{moveit\+\_\+assignment}} foundable in the repository. The final .urdf file used is {\bfseries{sherlock\+\_\+robot\+\_\+moveit.\+urdf}}. Moreover the robot has a derivative controller and it is equipped both of laser and camera.\hypertarget{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md3}{}\doxysubsection{Robot behavior and Rosplan}\label{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md3}
+S\+T\+A\+TE D\+I\+A\+G\+R\+AM
+
+The robot can perform different actions\+:
+\begin{DoxyItemize}
+\item move around
+\item move the gripper
+\item perceive an hint
+\item check the consistency of an hypothesis
+\item check if an hypotesis is correct
+\end{DoxyItemize}
+
+Each action represent a specific state of the robot. The sequence in which the actions are performed is the one generated as plan by the R\+O\+Splan system. The transistions between the different states is menaged by the dispatcher. In the state diagram all these state are represented, morever has been inserted another state which is the initial state of the robot, and the announce state which is a substate of the Check correct state. All the central state are connected by the reasoning which is intended for the {\bfseries{R\+O\+Splan}} or the {\bfseries{\mbox{\hyperlink{_reasoning_8py}{Reasoning.\+py}}}} which is specified above. In the {\bfseries{common}} folder have been defined the pddl problem and domain which are respectively {\bfseries{cluedo\+\_\+plan\+\_\+nohint.\+pddl}} and the {\bfseries{cluedo\+\_\+domain\+\_\+nohint.\+pddl}}. The {\bfseries{plan.\+pddl}} and {\bfseries{cluedo\+\_\+plan\+\_\+nohint.\+pddl}} are generated and updated when code is running. The domain file three different types have been defined\+: robot, hypothesis and location. In the domain file each for is state of the robot a durative action has been defined\+: {\bfseries{move}}, {\bfseries{move\+\_\+gripper}}, {\bfseries{perceive\+\_\+hint}}, {\bfseries{check\+\_\+consistency}}, {\bfseries{check\+\_\+correct}}. Moreover the action {\bfseries{new\+\_\+turn}} has been used to make the robot to visit again all the wayppoints after a turn of navigation has been completed. The durative actions are used to menage the following predicates\+:
+\begin{DoxyItemize}
+\item {\bfseries{visited}} , {\bfseries{non\+\_\+visited}} are used to managed the navigation between locations.
+\item {\bfseries{not\+\_\+initial\+\_\+location}} is used to menage differently the location (0,0) and the waypoints.
+\item {\bfseries{at}} is a predicate to state the actual location of the problem
+\item {\bfseries{move\+\_\+performed}} is a predicate used to move the robot\textquotesingle{}s arm only once it has changed location
+\item {\bfseries{gripper\+\_\+positioned}} is a predicate used to state that the gripper has been correctly moved, and the hint can be perceived only after that. whereas {\bfseries{not\+\_\+gripper\+\_\+positioned}} is used to move the robot in a new location even if the {\bfseries{perceived\+\_\+hint}} action is not correctly concluded.
+\item {\bfseries{perceived}} is a predicate used to state if an hypotesis has been perceived whereas {\bfseries{consistent}} is used to state if a consistent hypothesis has been found.
+\item {\bfseries{end\+\_\+game}} is grounded when a the correct hypothesis has been found. The problem file initialize the robot at the centre of the arena and all the waypoints as non visited. The only goal is that the correct hypotesis is found so the {\bfseries{end\+\_\+game}} predicate has a true value.
+\end{DoxyItemize}\hypertarget{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{R\+O\+S nodes}\label{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md4}
+
+\begin{DoxyItemize}
+\item {\bfseries{\mbox{\hyperlink{_armor_interface_8py}{Armor\+Interface.\+py}}}} service server is a node used to menage with {\bfseries{armor}}. It interacts in four possible ways\+: load the ontology, check the hypothesis is correct, check if there is a new consistent hypothesis and add a new hint to the ontology once it has been perceived. The empty ontology is inside {\bfseries{cluedo\+\_\+ontology.\+owl}} whereas an ontology is saved once the game is concluded in {\bfseries{cluedo\+\_\+ontology\+\_\+inference.\+owl}}.
+\item {\bfseries{\mbox{\hyperlink{_announce_hypotesis_8py}{Announce\+Hypotesis.\+py}}}} is a service server used to menage the announcement behavior of the robot. Once the robot has found a new consistent hypothesis it must go at the centre of the arena and announce it. The node call directly the service to move the robot and after does the announcement simply printing the hypothesis on the shell.
+\item {\bfseries{\mbox{\hyperlink{_reasoning_8py}{Reasoning.\+py}}}} node menage the whole simulation. It firstly ask to the \mbox{\hyperlink{_armor_interface_8py}{Armor\+Interface.\+py}} service to load the ontology, then call the service to start the first phase of the game. Then since the end is not concluded it interfaces with the R\+O\+Splan system. At each ieration it firstly calls the problem loader, the plan generator, the parse plannig service and finally the dispatcher to distpatch the actions.
+\item {\bfseries{\mbox{\hyperlink{simulation_8cpp}{simulation.\+cpp}}}} is an already implemented node which is used to position randomly the location where the hint are perceived. Moreover it generates hints randomly and publish them in the topic $\ast$$\ast$/oracle\+\_\+hint$\ast$$\ast$, hint can be correctly perceived or malformed. Moreover it is the Oracle which responds if the hypothesis to check is correct or not.
+\item {\bfseries{\mbox{\hyperlink{initial__phase_8cpp}{initial\+\_\+phase.\+cpp}}}} is a service server used to simulate the starting phase of the game. Since the height of the location where hints are perceived are is a random valuebetween 1.\+25 and 0.\+75 at each game session robot must firstly visit each location and check moving the gripper where is positioned the location. In particular the robot check only if the hint is generated when the gripper is at 0.\+75, if it is not generated the location is assumed at 1.\+25.
+\end{DoxyItemize}
+
+The action called by the dispatcher are implemented as class which definition is contaioned in the {\bfseries{include/my\+\_\+erl2}} folder. In the {\bfseries{src}} one it is possible to find the implemented actions.
+
+
+\begin{DoxyItemize}
+\item {\bfseries{\mbox{\hyperlink{move_8cpp}{move.\+cpp}}}} action is the code devoted to the motion of the robot. In order to to that it call the {\bfseries{go\+\_\+to\+\_\+point\+\_\+action.\+py}} of the \href{https://github.com/CarmineD8/rt2_packages/tree/main/motion_plan}{\texttt{ {\bfseries{motion\+\_\+plan}} package}}.
+\item {\bfseries{\mbox{\hyperlink{grippermotion_8cpp}{grippermotion.\+cpp}}}} is a action server devoted to the motion of the robotic arm. In order the to reach a certain location in the environment the plan and the execution of the robotic arm is directly menaged by {\bfseries{moveit}} through the packege {\bfseries{moveit\+\_\+assignment}} present in the repository.
+\item {\bfseries{\mbox{\hyperlink{perceivehints_8cpp}{perceivehints.\+cpp}}}}, {\bfseries{\mbox{\hyperlink{checkconsistency_8cpp}{checkconsistency.\+cpp}}}} and {\bfseries{\mbox{\hyperlink{checkcorrect_8cpp}{checkcorrect.\+cpp}}}} are three action node that simply call {\bfseries{\mbox{\hyperlink{_armor_interface_8py}{Armor\+Interface.\+py}}}} respectivly to perceive a new hint, check if there is a new consistent hypothesis, check if the currecnt consistent hypothesis is correct.
+\end{DoxyItemize}
+
+C\+O\+M\+P\+O\+N\+E\+NT D\+I\+A\+G\+R\+AM
+
+The Component diagram shows the simplified version of the software architecture, it is possible to see how the {\bfseries{\mbox{\hyperlink{_reasoning_8py}{Reasoning.\+py}}}} node menage the whole simulation. It is the only node connected through the R\+O\+Splan, which directly menage which action to dispatch. All the action are represented by a single component called {\bfseries{rosplan\+\_\+interface\+\_\+action.\+cpp}} for simplicity. Moreover in the diagram for the same reason it is not represented the feedback line but only the goal and the result.\hypertarget{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{Defined costume Services}\label{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md5}
+
+\begin{DoxyItemize}
+\item {\bfseries{Armor\+Interface.\+srv}} it is a service with as request the {\bfseries{mode}} in which the client wants to interface with armor\+: 0 to load the ontology, 1 to check correct, 2 to check consistency, 3 to perceive an hint. Another request field is the {\bfseries{ID}} of the hypothesis to check if any. The response is characterized by the {\bfseries{mode}} and the {\bfseries{ID}} as above, moreover is present the {\bfseries{success}} field that it is true if the action has been correctly concluded. For example it is false when is performed a malformed hint, when there isn\textquotesingle{}t new consistent hypothesis or when the checked hypothesis is uncorrect.
+\item {\bfseries{Announcement.\+srv}} has as request the {\bfseries{who}}, {\bfseries{what}} and {\bfseries{where}} fields of the hypothesis to announce. The response is a boolean {\bfseries{success}} to state is the service has been correctly concluded.
+\end{DoxyItemize}\hypertarget{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md6}{}\doxysubsection{Parameters}\label{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md6}
+All the parameters defined are inside the {\bfseries{gamesession.\+yaml}} file in the {\bfseries{config}} folder.
+\begin{DoxyItemize}
+\item {\bfseries{current\+\_\+hypotesis}} is used to state the current consistent hypotesis to check.
+\item {\bfseries{curr\+\_\+\+ID}} contains only the id of the current hypothesis.
+\item {\bfseries{ontology}} and {\bfseries{ontology\+\_\+path}} contain the link and the path used to load the ontology.
+\item {\bfseries{wp1}}, {\bfseries{wp2}}, {\bfseries{wp3}} and {\bfseries{wp4}} are booleans parameters to store the actual z coordinate of the location of a specific waypoint. the param is 1 if the heigth is 0.\+75 otherwise when it is 1.\+25 the value is 0.
+\item {\bfseries{start}} is the param used to menage the initial phase and make it does only once.
+\item {\bfseries{actual\+\_\+location}} is a parameter used to store the actual location of the robot.
+\end{DoxyItemize}\hypertarget{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md7}{}\doxysection{Requirements}\label{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md7}
+The R\+OS packages needded to compile the code are\+:
+\begin{DoxyItemize}
+\item \href{https://github.com/EmaroLab/armor}{\texttt{ armor}}
+\item \href{https://github.com/CarmineD8/rt2_packages/tree/main/motion_plan}{\texttt{ {\bfseries{motion\+\_\+plan}} package}}
+\item \href{https://github.com/KCL-Planning/ROSPlan}{\texttt{ R\+O\+S\+Plan}}.
+\end{DoxyItemize}\hypertarget{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md8}{}\doxysection{How to compile the code}\label{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md8}
+Clone \href{https://github.com/AliceNardelli/erl_assignment2}{\texttt{ erl\+\_\+assignment2}} repository. Build the workspace\+:
+
+\begin{quote}
+catkin\+\_\+make -\/D\+C\+A\+T\+K\+I\+N\+\_\+\+W\+H\+I\+T\+E\+L\+I\+S\+T\+\_\+\+P\+A\+C\+K\+A\+G\+ES=\char`\"{}\char`\"{} \end{quote}
+
+
+Load the a\+R\+M\+OR (remember that the rosmaster must running)\+:
+
+\begin{quote}
+rosrun armor execute it.\+emarolab.\+armor.\+A\+R\+M\+O\+R\+Main\+Service \end{quote}
+
+
+Run the overall simulation\+:
+
+\begin{quote}
+roslaunch moveit\+\_\+assignment demo\+\_\+gazebo.\+launch \end{quote}
+
+
+\begin{quote}
+roslaunch \mbox{\hyperlink{namespacemy__erl2}{my\+\_\+erl2}} pddl\+\_\+launcher.\+launch \end{quote}
+
+
+\begin{quote}
+roslaunch \mbox{\hyperlink{namespacemy__erl2}{my\+\_\+erl2}} Cluedo\+\_\+game.\+launch \end{quote}
+\hypertarget{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md9}{}\doxysection{Working hypothesis and environment}\label{md__root_ros_ws_src_erl_assignment2_my_erl2__r_e_a_d_m_e_autotoc_md9}
+The overall system is characterized by a modular architecture. The aim is to distribute the code as much as possible between the different nodes. Each component has a specific role in the architecture. The communication protocol more used in the overall architecture are the service and the action. That means that the most of the all modu 

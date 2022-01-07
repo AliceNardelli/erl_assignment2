@@ -1,3 +1,34 @@
+/** @package my_erl2
+* 
+* @file checkcorrect.cpp
+* @brief Node to implement the check correct action 
+* @author Alice Nardelli
+* @version 0.1
+* @date 07/01/2022
+*
+*
+*
+* @details 
+*
+* Subscribes to: <BR>
+*    None
+* 
+* Publishes to: <BR>
+*    None
+* 
+* Client: <BR>
+*   /armor_interface
+* 	
+* Services: <BR>
+*  /rosplan_interface_checkcorrect
+*
+* Description: <BR>
+*
+*This is a service server node that if called directly ask to /armor_interface
+*service if the current consistent hypothesis is correct
+*
+*/
+
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
@@ -18,20 +49,27 @@ namespace KCL_rosplan {
 
 CheckCorrectActionInterface::CheckCorrectActionInterface(ros::NodeHandle &nh) {
 	// here the initialization
-	//ros::ServiceClient client = nh.serviceClient<my_erl2::ArmorInterface>("armor_interface");
+	
 
 }
+/**
+ *@brief This function is the callback function of the service for server.
+ *@param msg  the request received from the dispatcher
+ * 
+ *@retval A boolean value
+ * 
+ *In this function is directly called the /armor_interface service to check if the current consistent hypothesis is correct.
+ *Return value is True if is correct and the game ended.
+ */
+ 
 bool CheckCorrectActionInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
 // here the implementation of the action
 	my_erl2::ArmorInterface srv;
 	
 	int curr_hypo;
-	//ros::param::get("/currID",curr_hypo);
-	//n.getParam("/current_hypotesis",curr_hypo)
-	//PRENDERE I PARAM UNO PER UNO....MERDA DI CPP
+
 	srv.request.mode = 1;
-	//srv.request.ID=curr_hypo;
-        //std::cout<<srv.request.ID<<std::endl;
+
 	if (client.call(srv))
 	{
 	    if(srv.response.success==false){

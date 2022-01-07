@@ -1,0 +1,53 @@
+\hypertarget{namespace_reasoning}{}\doxysection{Reasoning Namespace Reference}
+\label{namespace_reasoning}\index{Reasoning@{Reasoning}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespace_reasoning_a556010b326aec362906ed7ddddf501b6}{query\+\_\+planner}} ()
+\item 
+def \mbox{\hyperlink{namespace_reasoning_aec8a0b956b6e5f980d461691b7f2f23a}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Module:
+Reasoning
+Author:
+Alice Nardelli alice.nardelli98@gmail.com
+ROS nodes that implement the master of the Software Architecture and menages the whole simulation
+Service Client :
+/armor_interface to load the ontology
+/init_service to start the initial phase
+/rosplan_problem_interface/problem_generation_server to load the problem
+/rosplan_planner_interface/planning_server to generate the plan
+/rosplan_parsing_interface/parse_plan to parse the plan
+/rosplan_plan_dispatcher/dispatch_plan to dispatch the actions
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespace_reasoning_aec8a0b956b6e5f980d461691b7f2f23a}\label{namespace_reasoning_aec8a0b956b6e5f980d461691b7f2f23a}} 
+\index{Reasoning@{Reasoning}!main@{main}}
+\index{main@{main}!Reasoning@{Reasoning}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily def Reasoning.\+main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}        Description of the main function:
+        In the main function firstly the ontology is loaded, then call the /init_service to start initial behavior then starts to interface with ROSPlan.\end{DoxyVerb}
+ 
+
+Definition at line 51 of file Reasoning.\+py.
+
+\mbox{\Hypertarget{namespace_reasoning_a556010b326aec362906ed7ddddf501b6}\label{namespace_reasoning_a556010b326aec362906ed7ddddf501b6}} 
+\index{Reasoning@{Reasoning}!query\_planner@{query\_planner}}
+\index{query\_planner@{query\_planner}!Reasoning@{Reasoning}}
+\doxysubsubsection{\texorpdfstring{query\_planner()}{query\_planner()}}
+{\footnotesize\ttfamily def Reasoning.\+query\+\_\+planner (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}        Description of the query function:
+        This function is used to interface with ROSPlan. It continously load the problem depending on the actual state grounded predicates, generate a plan, parse it and dispatch actions.
+        The function is runned each time an action fails since the goal of the problem is not reached.\end{DoxyVerb}
+ 
+
+Definition at line 26 of file Reasoning.\+py.
+

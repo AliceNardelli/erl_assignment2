@@ -1,0 +1,86 @@
+\hypertarget{class_k_c_l__rosplan_1_1_check_correct_action_interface}{}\doxysection{K\+C\+L\+\_\+rosplan\+::Check\+Correct\+Action\+Interface Class Reference}
+\label{class_k_c_l__rosplan_1_1_check_correct_action_interface}\index{KCL\_rosplan::CheckCorrectActionInterface@{KCL\_rosplan::CheckCorrectActionInterface}}
+
+
+{\ttfamily \#include $<$checkcorrect.\+h$>$}
+
+
+
+Inheritance diagram for K\+C\+L\+\_\+rosplan\+::Check\+Correct\+Action\+Interface\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=227pt]{class_k_c_l__rosplan_1_1_check_correct_action_interface__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for K\+C\+L\+\_\+rosplan\+::Check\+Correct\+Action\+Interface\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=227pt]{class_k_c_l__rosplan_1_1_check_correct_action_interface__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_k_c_l__rosplan_1_1_check_correct_action_interface_a59362554925b679e3335bcf0ce271f62}{Check\+Correct\+Action\+Interface}} (ros\+::\+Node\+Handle \&nh)
+\item 
+bool \mbox{\hyperlink{class_k_c_l__rosplan_1_1_check_correct_action_interface_ab7009ceaa59488970fdec1bc72b9ea7b}{concrete\+Callback}} (const rosplan\+\_\+dispatch\+\_\+msgs\+::\+Action\+Dispatch\+::\+Const\+Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em This function is the callback function of the service for server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 17 of file checkcorrect.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_k_c_l__rosplan_1_1_check_correct_action_interface_a59362554925b679e3335bcf0ce271f62}\label{class_k_c_l__rosplan_1_1_check_correct_action_interface_a59362554925b679e3335bcf0ce271f62}} 
+\index{KCL\_rosplan::CheckCorrectActionInterface@{KCL\_rosplan::CheckCorrectActionInterface}!CheckCorrectActionInterface@{CheckCorrectActionInterface}}
+\index{CheckCorrectActionInterface@{CheckCorrectActionInterface}!KCL\_rosplan::CheckCorrectActionInterface@{KCL\_rosplan::CheckCorrectActionInterface}}
+\doxysubsubsection{\texorpdfstring{CheckCorrectActionInterface()}{CheckCorrectActionInterface()}}
+{\footnotesize\ttfamily K\+C\+L\+\_\+rosplan\+::\+Check\+Correct\+Action\+Interface\+::\+Check\+Correct\+Action\+Interface (\begin{DoxyParamCaption}\item[{ros\+::\+Node\+Handle \&}]{nh }\end{DoxyParamCaption})}
+
+
+
+Definition at line 50 of file checkcorrect.\+cpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_k_c_l__rosplan_1_1_check_correct_action_interface_ab7009ceaa59488970fdec1bc72b9ea7b}\label{class_k_c_l__rosplan_1_1_check_correct_action_interface_ab7009ceaa59488970fdec1bc72b9ea7b}} 
+\index{KCL\_rosplan::CheckCorrectActionInterface@{KCL\_rosplan::CheckCorrectActionInterface}!concreteCallback@{concreteCallback}}
+\index{concreteCallback@{concreteCallback}!KCL\_rosplan::CheckCorrectActionInterface@{KCL\_rosplan::CheckCorrectActionInterface}}
+\doxysubsubsection{\texorpdfstring{concreteCallback()}{concreteCallback()}}
+{\footnotesize\ttfamily bool K\+C\+L\+\_\+rosplan\+::\+Check\+Correct\+Action\+Interface\+::concrete\+Callback (\begin{DoxyParamCaption}\item[{const rosplan\+\_\+dispatch\+\_\+msgs\+::\+Action\+Dispatch\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+This function is the callback function of the service for server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & the request received from the dispatcher\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & boolean value\\
+\hline
+\end{DoxyRetVals}
+In this function is directly called the /armor\+\_\+interface service to check if the current consistent hypothesis is correct. Return value is True if is correct and the game ended. 
+
+Definition at line 65 of file checkcorrect.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/root/ros\+\_\+ws/src/erl\+\_\+assignment2/my\+\_\+erl2/include/my\+\_\+erl2/\mbox{\hyperlink{checkcorrect_8h}{checkcorrect.\+h}}\item 
+/root/ros\+\_\+ws/src/erl\+\_\+assignment2/my\+\_\+erl2/src/\mbox{\hyperlink{checkcorrect_8cpp}{checkcorrect.\+cpp}}\end{DoxyCompactItemize}

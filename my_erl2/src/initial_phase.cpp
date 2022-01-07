@@ -1,3 +1,38 @@
+/** @package my_erl2
+* 
+* @file initial_phase.cpp
+* @brief Node to implement the initial phase service 
+* @author Alice Nardelli
+* @version 0.1
+* @date 07/01/2022
+*
+*
+*
+* @details 
+*
+* Subscribes to: <BR>
+*    /oracle_hint
+* 
+* Publishes to: <BR>
+*    None
+* 
+* Client: <BR>
+*   /moveit_interface
+* 	
+* Services: <BR>
+*  /init_service
+*
+*Action Client:
+*  /reaching_goal
+*
+* Description: <BR>
+*
+*This is a service node used to implement the initial behavior of the robot. 
+*It goes in each location in order to find the correct z coordinate in order to generate hint
+*as the fact that at each simulation it is randomly generated between 0.75 and 1.25
+*
+*/
+
 #include <unistd.h>
 #include <ros/ros.h>
 #include <rosplan_action_interface/RPActionInterface.h>
@@ -13,6 +48,8 @@
 #include <motion_plan/PlanningAction.h>
 #include "my_erl2/ErlOracle.h"
 #include "std_srvs/Trigger.h"
+
+// initialization of global variables
 int state=0;
 bool finished=false;
 bool moved=false;
@@ -22,12 +59,29 @@ bool new_msg=false;
 int up[4]={0,0,0,0};
 int down[4]={0,0,0,0};
 bool activate=false;
+
+/**
+ *@brief This function is the callback of /oracle_hint subscribers
+ *@param msg  the ErlOracle msg published 
+ * 
+ *@retval None
+ * 
+ *If a new hint is generated the new_msg global variable is set to true
+ */
 void Callback(const my_erl2::ErlOracle::ConstPtr& msg)
 {
-
   new_msg=true;
 }
-
+/**
+ *@brief move function
+ *@param x the desired x-coordinate
+ *@param y the desired y-coordinate 
+ *@param t the desired yaw
+ * 
+ *@retval None
+ * 
+ *this function call the /reaching_goal function in order make robot reach a certain position in the environment.
+ */
 void move(double x, double y,double t){
 
      		
@@ -45,7 +99,17 @@ void move(double x, double y,double t){
         ROS_INFO("LOCATION REACHED");
         moved=true;
 }
-	
+/**
+ *@brief move_gripper function
+ *@param x the desired x-coordinate of the end-effector
+ *@param y the desired y-coordinate of the end-effector
+ *@param start boolean 
+ * 
+ *@retval None
+ * 
+ *In this function The moveit ad-hoc generated package is used in order to reach a certain point in the environment.
+ *
+ */	
 void move_gripper(double x, double y,bool start){
          robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
 	 const moveit::core::RobotModelPtr& kinematic_model = robot_model_loader.getModel();
@@ -70,7 +134,7 @@ void move_gripper(double x, double y,bool start){
           //For loop has been inserted to explore both the heights 0.75 and 1.25
           //actually the robot look only for 0.75
           for(int i=0;i<1;i++){
-          
+          //desired pose
 	  pose1.orientation.w = 0.70;
 	  pose1.orientation.x = -0.00;
 	  pose1.orientation.y = 0.00;
@@ -81,10 +145,10 @@ void move_gripper(double x, double y,bool start){
 	  if(first_turn_ended==false)	pose1.position.z = 0.70;
 	  else pose1.position.z =  0.75;
 
-	  
+	  //set the current state as start
 	  group.setStartStateToCurrentState();
 	  group.setApproximateJointValueTarget(pose1, "arm_link_04");
-
+          //look for inverse kinematic
 	  found_ik = kinematic_state->setFromIK(joint_model_group, pose1, timeout);
 
 	  // Now, we can print out the IK solution (if found):
@@ -119,6 +183,7 @@ void move_gripper(double x, double y,bool start){
           new_msg=false;
          
           if(i==0){
+             //set the param 1 if a msg has been published when robot put the ee at height 0.75
              if (state==0){up[0]=1;ros::param::set("/wp1", 1);}
              else if (state==1) {up[1]=1;ros::param::set("/wp2", 1);}
              else if (state==2) {up[2]=1;ros::param::set("/wp3", 1);}
@@ -135,10 +200,12 @@ void move_gripper(double x, double y,bool start){
           /*if(i==0) first_turn_ended=true;
           else first_turn_ended=false;*/
           }
-	  
+	  //return at 0 position
 	  move(0,0,0);
+	  //increment the state
 	  state=state+1;
 	  moved=false;
+	  //if the state is 4 the init phase is concluded
 	  if (state==4){
            activate=false;
            finished=true;
@@ -147,6 +214,18 @@ void move_gripper(double x, double y,bool start){
 	  }}
 
 }
+
+/**
+ *@brief fsm function
+ *@param None
+ * 
+ *@retval None
+ * 
+ *This is the finite state machine of the init phase.
+ *For each state firstly the desired waypoint is reached then the gripper moved.
+ *
+ */
+ 
 void fsm(){
         if (finished==false){
         if( state==0 ){

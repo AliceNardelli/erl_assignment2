@@ -3,8 +3,8 @@
 
 
 /**
- * This file defines the MoveActionInterface class.
- * MoveActionInterface is used to simulate synthetic actions (non physics based simulator)
+ * This file defines the CheckCorrectActionInterface class.
+ * CheckCorrectActionInterface is used to check if the current consisten hypothesis is correct
  * 
  */
 

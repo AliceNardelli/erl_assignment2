@@ -86,7 +86,7 @@ All the parameters defined are inside the **gamesession.yaml** file in the **con
 The ROS packages needded to compile the code are:
 * [armor](https://github.com/EmaroLab/armor)
 * [**motion_plan** package](https://github.com/CarmineD8/rt2_packages/tree/main/motion_plan)
-* (ROSPlan)[https://github.com/KCL-Planning/ROSPlan].
+* [ROSPlan](https://github.com/KCL-Planning/ROSPlan).
 
 ## How to compile the code
 
@@ -101,15 +101,21 @@ Load the aRMOR (remember that the rosmaster must running):
 
 Run the overall simulation:
 
+
 > roslaunch moveit_assignment demo_gazebo.launch
+
+
 > roslaunch my_erl2 pddl_launcher.launch
+
+
 > roslaunch my_erl2 Cluedo_game.launch
+
 
 ## Working hypothesis and environment
 
 
 The overall system is characterized by a modular architecture. The aim is to distribute the code as much as possible between the different nodes. Each component has a specific role in the architecture.
-
+The communication protocol more used in the overall architecture are the service and the action. That means that the most of the all modu
 
 
 

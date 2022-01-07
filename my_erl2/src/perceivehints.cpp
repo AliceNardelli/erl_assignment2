@@ -1,3 +1,33 @@
+/** @package my_erl2
+* 
+* @file perceivehints.cpp
+* @brief Node to implement the check correct action 
+* @author Alice Nardelli
+* @version 0.1
+* @date 07/01/2022
+*
+*
+*
+* @details 
+*
+* Subscribes to: <BR>
+*    None
+* 
+* Publishes to: <BR>
+*    None
+* 
+* Client: <BR>
+*   /armor_interface
+* 	
+* Services: <BR>
+*  /rosplan_interface_perceivehints
+*
+* Description: <BR>
+*
+*This is a service node used to call the /armor_interface service in order to perceive an hint.
+*
+*/
+
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
@@ -17,9 +47,18 @@ namespace KCL_rosplan {
 
 PerceiveHintsActionInterface::PerceiveHintsActionInterface(ros::NodeHandle &nh) {
 	// here the initialization
-	//ros::ServiceClient client = nh.serviceClient<my_erl2::ArmorInterface>("/armor_interface");
+	
 
 }
+/**
+ *@brief This function is the callback function of the service for server.
+ *@param msg  the request received from the dispatcher
+ * 
+ *@retval A boolean value
+ * 
+ *In this function is directly called the /armor_interface service to perceive a new hint
+ *Return value is True if an hint is perceived.
+ */
 bool PerceiveHintsActionInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
         // here the implementation of the action
 	my_erl2::ArmorInterface srv;

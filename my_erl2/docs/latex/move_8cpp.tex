@@ -1,0 +1,108 @@
+\hypertarget{move_8cpp}{}\doxysection{/root/ros\+\_\+ws/src/erl\+\_\+assignment2/my\+\_\+erl2/src/move.cpp File Reference}
+\label{move_8cpp}\index{/root/ros\_ws/src/erl\_assignment2/my\_erl2/src/move.cpp@{/root/ros\_ws/src/erl\_assignment2/my\_erl2/src/move.cpp}}
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$ros/ros.\+h$>$}\newline
+{\ttfamily \#include $<$rosplan\+\_\+action\+\_\+interface/\+R\+P\+Action\+Interface.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}my\+\_\+erl2/move.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$actionlib/client/simple\+\_\+action\+\_\+client.\+h$>$}\newline
+{\ttfamily \#include $<$actionlib/client/terminal\+\_\+state.\+h$>$}\newline
+{\ttfamily \#include $<$motion\+\_\+plan/\+Planning\+Action.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Twist.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}nav\+\_\+msgs/\+Odometry.\+h\char`\"{}}\newline
+Include dependency graph for move.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{move_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespace_k_c_l__rosplan}{K\+C\+L\+\_\+rosplan}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{move_8cpp_aab6e381bffc34921244a29ec0538ba64}{position\+Callback}} (const nav\+\_\+msgs\+::\+Odometry\+::\+Const\+Ptr \&msg)
+\item 
+int \mbox{\hyperlink{move_8cpp_aeecd6e89e2a3202942f8bc969295608a}{distance}} (int x, int y)
+\item 
+int \mbox{\hyperlink{move_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{move_8cpp_a3ecbf16eb855fc6dc0243b75097234c8}{actual\+\_\+x}}
+\item 
+int \mbox{\hyperlink{move_8cpp_aaf4a31b1a041eb9a85a55ec0d5c53203}{actual\+\_\+y}}
+\item 
+ros\+::\+Publisher \mbox{\hyperlink{move_8cpp_a350594df3e8f6948c8462edfd41ce086}{pub}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{move_8cpp_aeecd6e89e2a3202942f8bc969295608a}\label{move_8cpp_aeecd6e89e2a3202942f8bc969295608a}} 
+\index{move.cpp@{move.cpp}!distance@{distance}}
+\index{distance@{distance}!move.cpp@{move.cpp}}
+\doxysubsubsection{\texorpdfstring{distance()}{distance()}}
+{\footnotesize\ttfamily int distance (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line 20 of file move.\+cpp.
+
+\mbox{\Hypertarget{move_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{move_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{move.cpp@{move.cpp}!main@{main}}
+\index{main@{main}!move.cpp@{move.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line 88 of file move.\+cpp.
+
+\mbox{\Hypertarget{move_8cpp_aab6e381bffc34921244a29ec0538ba64}\label{move_8cpp_aab6e381bffc34921244a29ec0538ba64}} 
+\index{move.cpp@{move.cpp}!positionCallback@{positionCallback}}
+\index{positionCallback@{positionCallback}!move.cpp@{move.cpp}}
+\doxysubsubsection{\texorpdfstring{positionCallback()}{positionCallback()}}
+{\footnotesize\ttfamily void position\+Callback (\begin{DoxyParamCaption}\item[{const nav\+\_\+msgs\+::\+Odometry\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Definition at line 15 of file move.\+cpp.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{move_8cpp_a3ecbf16eb855fc6dc0243b75097234c8}\label{move_8cpp_a3ecbf16eb855fc6dc0243b75097234c8}} 
+\index{move.cpp@{move.cpp}!actual\_x@{actual\_x}}
+\index{actual\_x@{actual\_x}!move.cpp@{move.cpp}}
+\doxysubsubsection{\texorpdfstring{actual\_x}{actual\_x}}
+{\footnotesize\ttfamily int actual\+\_\+x}
+
+
+
+Definition at line 11 of file move.\+cpp.
+
+\mbox{\Hypertarget{move_8cpp_aaf4a31b1a041eb9a85a55ec0d5c53203}\label{move_8cpp_aaf4a31b1a041eb9a85a55ec0d5c53203}} 
+\index{move.cpp@{move.cpp}!actual\_y@{actual\_y}}
+\index{actual\_y@{actual\_y}!move.cpp@{move.cpp}}
+\doxysubsubsection{\texorpdfstring{actual\_y}{actual\_y}}
+{\footnotesize\ttfamily int actual\+\_\+y}
+
+
+
+Definition at line 12 of file move.\+cpp.
+
+\mbox{\Hypertarget{move_8cpp_a350594df3e8f6948c8462edfd41ce086}\label{move_8cpp_a350594df3e8f6948c8462edfd41ce086}} 
+\index{move.cpp@{move.cpp}!pub@{pub}}
+\index{pub@{pub}!move.cpp@{move.cpp}}
+\doxysubsubsection{\texorpdfstring{pub}{pub}}
+{\footnotesize\ttfamily ros\+::\+Publisher pub}
+
+
+
+Definition at line 13 of file move.\+cpp.
+
