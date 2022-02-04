@@ -113,7 +113,7 @@ Run the overall simulation:
 
 
 ##  Relevant parts of the running code
-There a screenshot of the shell of the running code is present. Moreover a registration is inserted in the repository.
+There a screenshot of the shell of the running code is present. This screen has been done during a simulated session of the whole game. So it is possible to see that the game conclude faster than in the complete-game case. A registration has been delivered to Professors. In the registration is visible the exploration phase when the robot look for the honts' generator. In that case the robot move only at 0.75. In the second turn it had already saved the correct height of generators so it move the arm both at 0.75 and 1.25 to perceive hints.
 
 ![Cluedo](shell.jpg)
 
