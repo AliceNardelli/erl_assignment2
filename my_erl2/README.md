@@ -1,19 +1,20 @@
 # Experimental Robotics Laboratory - Assignment2
-
+![Cluedo](cluedo_game.jpg)
 The assignment consists in developping a software architecture to simulate an autonomous Cluedo game. The robot should explore in an arena, looking for hints which are in established locations. Reason about the hints through an ontology and find the solution of the game. The best actions that robot must perform are selected through a pddl planning system.
 
 ## Software Architecture
 
 ### Robot Model
 
-IMAGE
+![Cluedo](robot.jpg)
+![Cluedo](robot_rviz.jpg)
 
 The robot model is visible in the image above. It has been developped developped in the **sherlock_robot.gazebo** and **sherlock_robot.xacro** files in the urdf folder. The only constraint is reaching the height of 0.75 and 1.25 which is the height where hint are located. In order to control the arm and reach the hints the are is controlled through an ad-oc generated moveit package **moveit_assignment** foundable in the repository. The final .urdf file used is **sherlock_robot_moveit.urdf**.
 Moreover the robot has a derivative controller and it is equipped both of laser and camera.
 
 ### Robot behavior and Rosplan
 
-STATE DIAGRAM
+![Cluedo](state.jpg)
 
 The robot can perform different actions:
 * move around
@@ -59,7 +60,7 @@ The action called by the dispatcher are implemented as class which definition is
 
 * **perceivehints.cpp**, **checkconsistency.cpp** and **checkcorrect.cpp** are three action node that simply call **ArmorInterface.py** respectivly to perceive a new hint, check if there is a new consistent hypothesis, check if the currecnt consistent hypothesis is correct.
 
-COMPONENT DIAGRAM 
+![Cluedo](component.jpg)
 
 The Component diagram shows the simplified version of the software architecture, it is possible to see how the **Reasoning.py** node menage the whole simulation. It is the only node connected through the ROSplan, which directly menage which action to dispatch. All the action are represented by a single component called **rosplan_interface_action.cpp** for simplicity. Moreover in the diagram for the same reason it is not represented the feedback line but only the goal and the result.
 
@@ -111,6 +112,11 @@ Run the overall simulation:
 > roslaunch my_erl2 Cluedo_game.launch
 
 
+##  Relevant parts of the running code
+There a screenshot of the shell of the running code is present. Moreover a registration is inserted in the repository.
+
+![Cluedo](shell.jpg)
+
 ## Working hypothesis and environment
 
 ### System's features
@@ -130,7 +136,9 @@ The INCORRECT class has been added to the ontology and has as instances all the 
 * Certainly a big improvement can be done on the robot model. Here a simple robot has been done using primitives shapes with only the strigtly needed requirements. A possible alternative should be use an alteady implemented robot model maybe with an ad-hoc generated moveit package and navigation modules. I had preferred to put my hands directly on all this stuff.
 * Finally a limitation is the initial phase (load of the ontology and exploration of the environment ) which is not menaged through the ROSPlan. A solution is add a specific durative-action on the domain file. A predicate which is grounded only once the action is concluded and this predicate should be added as precondition of all other actions. Logically the ROS Plan will be adapted consequently.
 
- 
+## Author 
+Alice Nardelli alice.nardelli98@gmail.com
+
 
 
 
