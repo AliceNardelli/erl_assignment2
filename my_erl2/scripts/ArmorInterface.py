@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-"""
+'''
 Module:
 	ArmorInterface
 Author:
@@ -14,7 +14,7 @@ Sevice Client:
 Subscribers:
        /oracle_hint to get the hints
        
-"""
+'''
 
 import sys
 import rospy

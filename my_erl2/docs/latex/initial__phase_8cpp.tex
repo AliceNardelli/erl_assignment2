@@ -19,8 +19,7 @@ Node to implement the initial phase service.
 {\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Pose.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}my\+\_\+erl2/\+Erl\+Oracle.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}std\+\_\+srvs/\+Trigger.\+h\char`\"{}}\newline
-Include dependency graph for initial\+\_\+phase.\+cpp\+:
-\nopagebreak
+Include dependency graph for initial\+\_\+phase.\+cpp\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -122,10 +121,6 @@ This function is the callback of /oracle\+\_\+hint subscribers.
 {\em None} & If a new hint is generated the new\+\_\+msg global variable is set to true \\
 \hline
 \end{DoxyRetVals}
-
-
-Definition at line 71 of file initial\+\_\+phase.\+cpp.
-
 \mbox{\Hypertarget{initial__phase_8cpp_a270932dff1ab343bb350f7c6e02d7a43}\label{initial__phase_8cpp_a270932dff1ab343bb350f7c6e02d7a43}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!fsm@{fsm}}
 \index{fsm@{fsm}!initial\_phase.cpp@{initial\_phase.cpp}}
@@ -146,19 +141,11 @@ fsm function
 {\em None} & This is the finite state machine of the init phase. For each state firstly the desired waypoint is reached then the gripper moved. \\
 \hline
 \end{DoxyRetVals}
-
-
-Definition at line 229 of file initial\+\_\+phase.\+cpp.
-
 \mbox{\Hypertarget{initial__phase_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{initial__phase_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!main@{main}}
 \index{main@{main}!initial\_phase.cpp@{initial\_phase.cpp}}
 \doxysubsubsection{\texorpdfstring{main()}{main()}}
 {\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
-
-
-
-Definition at line 284 of file initial\+\_\+phase.\+cpp.
 
 \mbox{\Hypertarget{initial__phase_8cpp_a86b19550c670fd5586b02bf7f759c8df}\label{initial__phase_8cpp_a86b19550c670fd5586b02bf7f759c8df}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!move@{move}}
@@ -184,10 +171,6 @@ move function
 {\em None} & this function call the /reaching\+\_\+goal function in order make robot reach a certain position in the environment. \\
 \hline
 \end{DoxyRetVals}
-
-
-Definition at line 85 of file initial\+\_\+phase.\+cpp.
-
 \mbox{\Hypertarget{initial__phase_8cpp_a9d9aef98a8dad5c897a9c84c3e4ad3fb}\label{initial__phase_8cpp_a9d9aef98a8dad5c897a9c84c3e4ad3fb}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!move\_gripper@{move\_gripper}}
 \index{move\_gripper@{move\_gripper}!initial\_phase.cpp@{initial\_phase.cpp}}
@@ -212,19 +195,11 @@ move\+\_\+gripper function
 {\em None} & In this function The moveit ad-\/hoc generated package is used in order to reach a certain point in the environment. \\
 \hline
 \end{DoxyRetVals}
-
-
-Definition at line 113 of file initial\+\_\+phase.\+cpp.
-
 \mbox{\Hypertarget{initial__phase_8cpp_a8fe82b3cc5068dbd212212b9d6098946}\label{initial__phase_8cpp_a8fe82b3cc5068dbd212212b9d6098946}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!srv\_clbk@{srv\_clbk}}
 \index{srv\_clbk@{srv\_clbk}!initial\_phase.cpp@{initial\_phase.cpp}}
 \doxysubsubsection{\texorpdfstring{srv\_clbk()}{srv\_clbk()}}
 {\footnotesize\ttfamily bool srv\+\_\+clbk (\begin{DoxyParamCaption}\item[{std\+\_\+srvs\+::\+Trigger\+::\+Request \&}]{req,  }\item[{std\+\_\+srvs\+::\+Trigger\+::\+Response \&}]{res }\end{DoxyParamCaption})}
-
-
-
-Definition at line 277 of file initial\+\_\+phase.\+cpp.
 
 
 
@@ -235,19 +210,11 @@ Definition at line 277 of file initial\+\_\+phase.\+cpp.
 \doxysubsubsection{\texorpdfstring{activate}{activate}}
 {\footnotesize\ttfamily bool activate =false}
 
-
-
-Definition at line 61 of file initial\+\_\+phase.\+cpp.
-
 \mbox{\Hypertarget{initial__phase_8cpp_ae630977468f8065578647b36b8facfbb}\label{initial__phase_8cpp_ae630977468f8065578647b36b8facfbb}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!down@{down}}
 \index{down@{down}!initial\_phase.cpp@{initial\_phase.cpp}}
 \doxysubsubsection{\texorpdfstring{down}{down}}
 {\footnotesize\ttfamily int down\mbox{[}4\mbox{]} =\{0,0,0,0\}}
-
-
-
-Definition at line 60 of file initial\+\_\+phase.\+cpp.
 
 \mbox{\Hypertarget{initial__phase_8cpp_a9324389a5cdc532c6417a87ccafe18ce}\label{initial__phase_8cpp_a9324389a5cdc532c6417a87ccafe18ce}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!finished@{finished}}
@@ -255,19 +222,11 @@ Definition at line 60 of file initial\+\_\+phase.\+cpp.
 \doxysubsubsection{\texorpdfstring{finished}{finished}}
 {\footnotesize\ttfamily bool finished =false}
 
-
-
-Definition at line 54 of file initial\+\_\+phase.\+cpp.
-
 \mbox{\Hypertarget{initial__phase_8cpp_a4141639934129ed38d88145463442b56}\label{initial__phase_8cpp_a4141639934129ed38d88145463442b56}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!first\_turn\_ended@{first\_turn\_ended}}
 \index{first\_turn\_ended@{first\_turn\_ended}!initial\_phase.cpp@{initial\_phase.cpp}}
 \doxysubsubsection{\texorpdfstring{first\_turn\_ended}{first\_turn\_ended}}
 {\footnotesize\ttfamily bool first\+\_\+turn\+\_\+ended =false}
-
-
-
-Definition at line 57 of file initial\+\_\+phase.\+cpp.
 
 \mbox{\Hypertarget{initial__phase_8cpp_a1d1c0318c0f74e0cb4bb62f0af54d556}\label{initial__phase_8cpp_a1d1c0318c0f74e0cb4bb62f0af54d556}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!gripper@{gripper}}
@@ -275,19 +234,11 @@ Definition at line 57 of file initial\+\_\+phase.\+cpp.
 \doxysubsubsection{\texorpdfstring{gripper}{gripper}}
 {\footnotesize\ttfamily bool gripper =false}
 
-
-
-Definition at line 56 of file initial\+\_\+phase.\+cpp.
-
 \mbox{\Hypertarget{initial__phase_8cpp_accdb2d42dce7c47aca0df1d5b3e147ec}\label{initial__phase_8cpp_accdb2d42dce7c47aca0df1d5b3e147ec}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!moved@{moved}}
 \index{moved@{moved}!initial\_phase.cpp@{initial\_phase.cpp}}
 \doxysubsubsection{\texorpdfstring{moved}{moved}}
 {\footnotesize\ttfamily bool moved =false}
-
-
-
-Definition at line 55 of file initial\+\_\+phase.\+cpp.
 
 \mbox{\Hypertarget{initial__phase_8cpp_a493c4c90ce31e7171c3dd7dd4c63577e}\label{initial__phase_8cpp_a493c4c90ce31e7171c3dd7dd4c63577e}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!new\_msg@{new\_msg}}
@@ -295,27 +246,15 @@ Definition at line 55 of file initial\+\_\+phase.\+cpp.
 \doxysubsubsection{\texorpdfstring{new\_msg}{new\_msg}}
 {\footnotesize\ttfamily bool new\+\_\+msg =false}
 
-
-
-Definition at line 58 of file initial\+\_\+phase.\+cpp.
-
 \mbox{\Hypertarget{initial__phase_8cpp_a89f234133d3efe315836311cbf21c64b}\label{initial__phase_8cpp_a89f234133d3efe315836311cbf21c64b}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!state@{state}}
 \index{state@{state}!initial\_phase.cpp@{initial\_phase.cpp}}
 \doxysubsubsection{\texorpdfstring{state}{state}}
 {\footnotesize\ttfamily int state =0}
 
-
-
-Definition at line 53 of file initial\+\_\+phase.\+cpp.
-
 \mbox{\Hypertarget{initial__phase_8cpp_aa4db2a36d8a0dcd459811e0592015e85}\label{initial__phase_8cpp_aa4db2a36d8a0dcd459811e0592015e85}} 
 \index{initial\_phase.cpp@{initial\_phase.cpp}!up@{up}}
 \index{up@{up}!initial\_phase.cpp@{initial\_phase.cpp}}
 \doxysubsubsection{\texorpdfstring{up}{up}}
 {\footnotesize\ttfamily int up\mbox{[}4\mbox{]} =\{0,0,0,0\}}
-
-
-
-Definition at line 59 of file initial\+\_\+phase.\+cpp.
 

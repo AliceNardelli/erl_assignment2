@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-"""
+'''
 Module:
 	AnnounceHypotesis
 Author:
@@ -10,7 +10,7 @@ Service :
 Service Client:
         /reaching_goal client call to reach the centre of the arena
         
-"""
+'''
 import rospy
 import random
 from my_erl2.srv import Announcement, AnnouncementResponse

@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-"""
+'''
 Module:
 	Reasoning
 Author:
@@ -12,7 +12,7 @@ Service Client :
 	/rosplan_planner_interface/planning_server to generate the plan
 	/rosplan_parsing_interface/parse_plan to parse the plan
 	/rosplan_plan_dispatcher/dispatch_plan to dispatch the actions
-"""
+'''
 import sys
 import rospy
 import actionlib
