@@ -7,7 +7,7 @@ The assignment consists in developping a software architecture to simulate an au
 ### Robot Model
 
 ![Cluedo](robot.jpg)
-![Cluedo](robot_rviz.jpg)
+
 
 The robot model is visible in the image above. It has been developped developped in the **sherlock_robot.gazebo** and **sherlock_robot.xacro** files in the urdf folder. The only constraint is reaching the height of 0.75 and 1.25 which is the height where hint are located. In order to control the arm and reach the hints the are is controlled through an ad-oc generated moveit package **moveit_assignment** foundable in the repository. The final .urdf file used is **sherlock_robot_moveit.urdf**.
 Moreover the robot has a derivative controller and it is equipped both of laser and camera.
